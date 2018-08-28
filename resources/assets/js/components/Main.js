@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import AppDispatcher from '../dispatcher.js';
 import ExampleStore from '../stores/ExampleStore.js';
 
+import { Label } from 'react-bootstrap';
+
 import {
   GET_EXAMPLE_MESSAGE,
   MAIN_ID
@@ -48,16 +50,20 @@ export default class Main extends Component {
     return (
       <div>
         <div>
-            Your Laravel/React App! This example will show a message...
+            Your Laravel/React App!! This example will show a message...
         </div>
-        <div>
-            {this.state.exampleMessage}
-        </div>
+        <h3>
+          <Label bsStyle='success'>
+              {this.state.exampleMessage}
+          </Label>
+        </h3>
       </div>
     );
   }
 }
 
-if (document.getElementById('example')) {
-  ReactDOM.render(<Main />, document.getElementById('main'));
+let RootElement = document.getElementById('root');
+
+if (RootElement) {
+  ReactDOM.render(<Main />, RootElement);
 }

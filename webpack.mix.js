@@ -1,6 +1,9 @@
 
 let mix = require('laravel-mix');
 
+let AppName = 'Laravel-React-Example';
+let AppRoot = 'htdocs';
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,9 +17,6 @@ let mix = require('laravel-mix');
 
 mix.react('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
-
-var AppName = $('meta[name="AppName"]').attr('content');
-var AppRoot = $('meta[name="AppRoot"]').attr('content');
 
 var exec = require('child_process').exec;
 

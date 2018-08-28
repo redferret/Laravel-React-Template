@@ -1,5 +1,5 @@
 
-import Actions from './actions/app-actions.js';
+import Actions from './actions/AppActions.js';
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
