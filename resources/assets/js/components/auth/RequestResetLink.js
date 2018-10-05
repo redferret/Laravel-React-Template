@@ -6,6 +6,7 @@ import Router from '../../router.js';
 import { SEND_PASSWORD_RESET } from '../../constants.js';
 
 import {
+  Alert,
   Button,
   Col,
   Form,
@@ -75,8 +76,13 @@ export default class RequestResetLink extends React.Component {
 
     return (
       <Form horizontal>
+        <FormGroup>
+          <Col smOffset={4} sm={4}>
+            {message? <Alert bsStyle='success'>{message}</Alert> : null}
+          </Col>
+        </FormGroup>
         <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com'
-          label={message? message : 'Enter Your Email Address'}
+          label='Enter Your Email Address'
           initialValue={this.state.values.email}
           validationCallback={() => emailError? 'error' : (message? 'success' : null)}
           help={emailError? emailError : ''}

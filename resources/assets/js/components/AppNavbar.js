@@ -57,7 +57,7 @@ export default class AppNavbar extends React.Component {
       <Navbar inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <span>Factorio Production Calculator</span>
+            <span>Laravel-React-Template</span>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
