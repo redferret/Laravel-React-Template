@@ -33,8 +33,10 @@ export default class RequestResetLink extends React.Component {
   _onChange() {
     this.setState({
       errors: AuthStore.getErrors(),
-      message: AuthStore.getMessage()
-    })
+      successMsg: AuthStore.getMessage()
+    });
+    AuthStore.setSuccess('');
+    AuthStore.setErrors(null);
   }
 
   componentDidMount() {
@@ -72,18 +74,18 @@ export default class RequestResetLink extends React.Component {
   render() {
     let errors = this.state.errors;
     let emailError = typeof errors !== 'undefined'? errors.email : null;
-    let message = this.state.message;
+    let success = this.state.successMsg;
 
     return (
       <Form horizontal>
         <FormGroup>
           <Col smOffset={4} sm={4}>
-            {message? <Alert bsStyle='success'>{message}</Alert> : null}
+            {success? <Alert bsStyle='success'>{success}</Alert> : null}
           </Col>
         </FormGroup>
         <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com'
           label='Enter Your Email Address'
-          initialValue={this.state.values.email}
+          initialValue={success? '' : this.state.values.email}
           validationCallback={() => emailError? 'error' : (message? 'success' : null)}
           help={emailError? emailError : ''}
           callback={(event) => this.handleInputChanged(event)} autoComplete='on'/>

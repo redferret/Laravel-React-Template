@@ -76861,8 +76861,10 @@ var RequestResetLink = function (_React$Component) {
     value: function _onChange() {
       this.setState({
         errors: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getErrors(),
-        message: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getMessage()
+        successMsg: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getMessage()
       });
+      __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].setSuccess('');
+      __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].setErrors(null);
     }
   }, {
     key: 'componentDidMount',
@@ -76907,7 +76909,7 @@ var RequestResetLink = function (_React$Component) {
 
       var errors = this.state.errors;
       var emailError = typeof errors !== 'undefined' ? errors.email : null;
-      var message = this.state.message;
+      var success = this.state.successMsg;
 
       return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["f" /* Form */],
@@ -76918,16 +76920,16 @@ var RequestResetLink = function (_React$Component) {
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["d" /* Col */],
             { smOffset: 4, sm: 4 },
-            message ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+            success ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["a" /* Alert */],
               { bsStyle: 'success' },
-              message
+              success
             ) : null
           )
         ),
         __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Input_js__["a" /* default */], { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com',
           label: 'Enter Your Email Address',
-          initialValue: this.state.values.email,
+          initialValue: success ? '' : this.state.values.email,
           validationCallback: function validationCallback() {
             return emailError ? 'error' : message ? 'success' : null;
           },
