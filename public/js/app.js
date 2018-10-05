@@ -76608,6 +76608,11 @@ var LoginForm = function (_React$Component) {
               __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["b" /* Checkbox */],
               { id: 'rememberMe' },
               'Remember me'
+            ),
+            __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+              'a',
+              { href: __WEBPACK_IMPORTED_MODULE_4__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_5__constants_js__["i" /* SHOW_PASSWORD_RESET */]) },
+              'Forgot Password'
             )
           )
         ),

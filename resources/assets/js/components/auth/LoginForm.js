@@ -3,7 +3,7 @@ import Input from '../Input.js';
 import AuthStore from '../../stores/AuthStore.js';
 import React from 'react';
 import Router from '../../router.js';
-import { LOG_IN } from '../../constants.js';
+import { LOG_IN, SHOW_PASSWORD_RESET } from '../../constants.js';
 
 import {
   Button,
@@ -89,6 +89,7 @@ export default class LoginForm extends React.Component {
         <FormGroup>
           <Col smOffset={4} sm={4}>
             <Checkbox id='rememberMe'>Remember me</Checkbox>
+            <a href={Router.route(SHOW_PASSWORD_RESET)}>Forgot Password</a>
           </Col>
         </FormGroup>
 
