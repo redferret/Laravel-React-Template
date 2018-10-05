@@ -8,3 +8,4 @@ export const LOG_IN = 'log-in';
 export const LOG_OUT = 'log-out';
 export const REGISTER = 'register';
 export const ROOT_URL = 'root-url';
+export const SHOW_PASSWORD_RESET = 'show-password-reset';

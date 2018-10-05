@@ -74,26 +74,26 @@ export default class LoginForm extends React.Component {
     let passwordError = typeof errors !== 'undefined'? errors.password : null;
     return (
       <Form horizontal>
-        <Input smOffset={2} sm={4} name='email' type='email' placeholder='Example@gmail.com' label='Email'
+        <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com' label='Email'
           initialValue={this.state.values.email}
           validationCallback={() => emailError? 'error' : null}
           help={emailError? emailError : ''}
           callback={(event) => this.handleInputChanged(event)} autoComplete='on'/>
 
-        <Input smOffset={2} sm={4} name='password' type='password' label='Password'
+        <Input smOffset={4} sm={4} name='password' type='password' label='Password'
           initialValue={this.state.values.password}
           validationCallback={() => passwordError? 'error' : null}
           help={passwordError? passwordError : ''}
           callback={(event) => this.handleInputChanged(event)}/>
 
         <FormGroup>
-          <Col smOffset={2} sm={4}>
+          <Col smOffset={4} sm={4}>
             <Checkbox id='rememberMe'>Remember me</Checkbox>
           </Col>
         </FormGroup>
 
         <FormGroup>
-          <Col smOffset={2} sm={10}>
+          <Col smOffset={4} sm={10}>
             <Button onClick={this.postLogin}>Sign in</Button>
           </Col>
         </FormGroup>

@@ -30,3 +30,7 @@ Router.registerRoute(Constants.LOG_OUT, args => {
 Router.registerRoute(Constants.REGISTER, args => {
   return ROOT + '/register';
 });
+
+Router.registerRoute(Constants.SHOW_PASSWORD_RESET, args => {
+  return ROOT + '/password/reset';
+});

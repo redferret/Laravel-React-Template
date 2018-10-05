@@ -23,6 +23,10 @@ class Actions {
   }
 }
 
+export function handleError(error) {
+  console.error('HTTP request failed', error);
+}
+
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;

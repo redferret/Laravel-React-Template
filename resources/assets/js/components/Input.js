@@ -50,6 +50,32 @@ class Input extends React.Component {
     }
   }
 
+  renderInput() {
+    let label = this.props.label? <ControlLabel>{this.props.label}</ControlLabel> : '';
+    let helpBlock = this.props.help? <HelpBlock>{this.props.help}</HelpBlock> : '';
+
+    return (
+      <div>
+        {label}
+        <FormControl type={this.props.type} name={this.props.name}
+          placeholder={this.props.placeholder}
+          onBlur={(event) => this.handleChange(event)}
+          onKeyPress={(event) => this.handleChange(event)}
+          onChange={(event) => {
+            this.ignoreBlur = false;
+            this.setState({
+              value: event.target.value
+            });
+          }}
+          inputRef={(reference) => this.DOMRef = reference}
+          value={this.state.value}
+          style={this.props.customStyle}
+          autoComplete={this.props.autoComplete}/>
+        {helpBlock}
+      </div>
+    )
+  }
+
   render() {
 
     let validationState = this.props.validationCallback();
@@ -70,32 +96,19 @@ class Input extends React.Component {
       <FormGroup
         validationState={validationState}
       >
-      <Col smOffset={this.props.smOffset} sm={this.props.sm}>
-          {label}
-          <FormControl type={this.props.type} name={this.props.name}
-            placeholder={this.props.placeholder}
-            onBlur={(event) => this.handleChange(event)}
-            onKeyPress={(event) => this.handleChange(event)}
-            onChange={(event) => {
-              this.ignoreBlur = false;
-              this.setState({
-                value: event.target.value
-              });
-            }}
-            inputRef={(reference) => this.DOMRef = reference}
-            value={this.state.value}
-            style={this.props.customStyle}
-            autoComplete={this.props.autoComplete}/>
-          {helpBlock}
-      </Col>
+      {this.props.sm && this.props.smOffset ?
+        <Col smOffset={this.props.smOffset} sm={this.props.sm}>
+          {this.renderInput()}
+        </Col>
+      :
+        this.renderInput()
+      }
       </FormGroup>
     );
   }
 }
 
 Input.defaultProps = {
-  smOffset: 0,
-  sm: 12,
   name: 'default',
   isStatic: false,
   autoComplete: 'off',
