@@ -76931,7 +76931,7 @@ var RequestResetLink = function (_React$Component) {
           label: 'Enter Your Email Address',
           initialValue: success ? '' : this.state.values.email,
           validationCallback: function validationCallback() {
-            return emailError ? 'error' : message ? 'success' : null;
+            return emailError ? 'error' : success ? 'success' : null;
           },
           help: emailError ? emailError : '',
           callback: function callback(event) {

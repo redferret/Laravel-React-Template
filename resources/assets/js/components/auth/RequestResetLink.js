@@ -86,7 +86,7 @@ export default class RequestResetLink extends React.Component {
         <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com'
           label='Enter Your Email Address'
           initialValue={success? '' : this.state.values.email}
-          validationCallback={() => emailError? 'error' : (message? 'success' : null)}
+          validationCallback={() => emailError? 'error' : (success? 'success' : null)}
           help={emailError? emailError : ''}
           callback={(event) => this.handleInputChanged(event)} autoComplete='on'/>
 
