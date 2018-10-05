@@ -9,5 +9,10 @@ Actions.register(RESET_PASSWORD_REQUEST, payload => {
   .then(checkStatus)
   .then(response => {
     relocateTo(response.url);
-  }).catch(handleError);
+  }).catch(error => {
+    parseJSON(error.response).then(errors => {
+      AuthStore.setErrors(errors);
+      Actions.finish(payload);
+    });
+  });
 });
