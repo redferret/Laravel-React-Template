@@ -2,10 +2,10 @@ import Actions, { checkStatus, handleError, relocateTo } from './AppActions.js';
 import AuthStore from '../stores/AuthStore.js';
 import Router from '../router.js';
 
-import { SHOW_PASSWORD_RESET } from '../constants.js';
+import { RESET_PASSWORD_REQUEST } from '../constants.js';
 
-Actions.register(SHOW_PASSWORD_RESET, payload => {
-  fetch(Router.route(SHOW_PASSWORD_RESET))
+Actions.register(RESET_PASSWORD_REQUEST, payload => {
+  fetch(Router.route(RESET_PASSWORD_REQUEST), Router.method('POST', payload.values))
   .then(checkStatus)
   .then(response => {
     relocateTo(response.url);

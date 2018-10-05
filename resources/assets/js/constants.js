@@ -9,3 +9,5 @@ export const LOG_OUT = 'log-out';
 export const REGISTER = 'register';
 export const ROOT_URL = 'root-url';
 export const SHOW_PASSWORD_RESET = 'show-password-reset';
+export const SEND_PASSWORD_RESET = 'send-password-reset';
+export const RESET_PASSWORD_REQUEST = 'reset-password-request';

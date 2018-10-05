@@ -22,15 +22,18 @@ Router.registerRoute(Constants.GET_EXAMPLE_MESSAGE, args => {
 Router.registerRoute(Constants.LOG_IN, args => {
   return ROOT + '/login';
 });
-
 Router.registerRoute(Constants.LOG_OUT, args => {
   return ROOT + '/logout';
 });
-
 Router.registerRoute(Constants.REGISTER, args => {
   return ROOT + '/register';
 });
-
 Router.registerRoute(Constants.SHOW_PASSWORD_RESET, args => {
+  return ROOT + '/password/reset';
+});
+Router.registerRoute(Constants.SEND_PASSWORD_RESET, args => {
+  return ROOT + '/password/email';
+});
+Router.registerRoute(Constants.RESET_PASSWORD_REQUEST, args => {
   return ROOT + '/password/reset';
 });
