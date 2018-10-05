@@ -14361,9 +14361,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_auth_RegisterForm_js__ = __webpack_require__(345);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__RenderManager_js__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__RenderManager_js__ = __webpack_require__(71);
 
 
 
@@ -14373,16 +14371,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-__WEBPACK_IMPORTED_MODULE_6__RenderManager_js__["a" /* default */].registerElement('app', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_App_js__["a" /* default */], null));
+__WEBPACK_IMPORTED_MODULE_5__RenderManager_js__["a" /* default */].registerElement('app', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0__components_App_js__["a" /* default */], null));
 // RenderManager.registerElement('forgot-password', ?);
-__WEBPACK_IMPORTED_MODULE_6__RenderManager_js__["a" /* default */].registerElement('login', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_auth_LoginForm_js__["a" /* default */], null));
-__WEBPACK_IMPORTED_MODULE_6__RenderManager_js__["a" /* default */].registerElement('navbar-guest', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_AppNavbar_js__["a" /* default */], { guest: true }));
-__WEBPACK_IMPORTED_MODULE_6__RenderManager_js__["a" /* default */].registerElement('navbar-user', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_AppNavbar_js__["a" /* default */], null));
-__WEBPACK_IMPORTED_MODULE_6__RenderManager_js__["a" /* default */].registerElement('register', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_auth_RegisterForm_js__["a" /* default */], null));
+__WEBPACK_IMPORTED_MODULE_5__RenderManager_js__["a" /* default */].registerElement('login', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_auth_LoginForm_js__["a" /* default */], null));
+__WEBPACK_IMPORTED_MODULE_5__RenderManager_js__["a" /* default */].registerElement('navbar-guest', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_AppNavbar_js__["a" /* default */], { guest: true }));
+__WEBPACK_IMPORTED_MODULE_5__RenderManager_js__["a" /* default */].registerElement('navbar-user', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_AppNavbar_js__["a" /* default */], null));
+__WEBPACK_IMPORTED_MODULE_5__RenderManager_js__["a" /* default */].registerElement('register', __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_auth_RegisterForm_js__["a" /* default */], null));
 // RenderManager.registerElement('reset-password', ?);
-
-__WEBPACK_IMPORTED_MODULE_6__RenderManager_js__["a" /* default */].renderElements();
 
 /***/ }),
 /* 19 */
@@ -14784,8 +14779,11 @@ module.exports = __webpack_require__(72);
 
 /***/ }),
 /* 26 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__RenderManager_js__ = __webpack_require__(71);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -14802,6 +14800,9 @@ __webpack_require__(7);
  */
 
 __webpack_require__(18);
+
+
+__WEBPACK_IMPORTED_MODULE_0__RenderManager_js__["a" /* default */].renderElements();
 
 /***/ }),
 /* 27 */
