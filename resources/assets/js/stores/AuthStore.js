@@ -3,17 +3,17 @@ var EventEmitter = require('events').EventEmitter;
 class AuthStore extends EventEmitter {
   constructor() {
     super();
-    this._message = '';
+    this._message = null;
     this._errors = {
       errors: ''
     };
   }
 
-  setSuccess(message) {
+  setStatus(message) {
     this._message = message;
   }
 
-  getMessage() {
+  getStatus() {
     return this._message;
   }
 

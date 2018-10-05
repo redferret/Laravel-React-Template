@@ -1571,7 +1571,7 @@ var AuthStore = function (_EventEmitter) {
 
     var _this = _possibleConstructorReturn(this, (AuthStore.__proto__ || Object.getPrototypeOf(AuthStore)).call(this));
 
-    _this._message = '';
+    _this._message = null;
     _this._errors = {
       errors: ''
     };
@@ -1579,13 +1579,13 @@ var AuthStore = function (_EventEmitter) {
   }
 
   _createClass(AuthStore, [{
-    key: 'setSuccess',
-    value: function setSuccess(message) {
+    key: 'setStatus',
+    value: function setStatus(message) {
       this._message = message;
     }
   }, {
-    key: 'getMessage',
-    value: function getMessage() {
+    key: 'getStatus',
+    value: function getStatus() {
       return this._message;
     }
   }, {
@@ -45359,7 +45359,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */], function (payload) {
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
-    __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setSuccess('We have e-mailed your password reset link!');
+    __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus('We have e-mailed your password reset link!');
   }).catch(function (error) {
     Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
       __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
@@ -76861,9 +76861,9 @@ var RequestResetLink = function (_React$Component) {
     value: function _onChange() {
       this.setState({
         errors: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getErrors(),
-        successMsg: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getMessage()
+        status: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getStatus()
       });
-      __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].setSuccess('');
+      __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].setStatus(null);
       __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].setErrors(null);
     }
   }, {
@@ -76909,7 +76909,7 @@ var RequestResetLink = function (_React$Component) {
 
       var errors = this.state.errors;
       var emailError = typeof errors !== 'undefined' ? errors.email : null;
-      var success = this.state.successMsg;
+      var status = this.state.status;
 
       return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["f" /* Form */],
@@ -76920,18 +76920,18 @@ var RequestResetLink = function (_React$Component) {
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["d" /* Col */],
             { smOffset: 4, sm: 4 },
-            success ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+            status ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["a" /* Alert */],
               { bsStyle: 'success' },
-              success
+              status
             ) : null
           )
         ),
         __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Input_js__["a" /* default */], { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com',
           label: 'Enter Your Email Address',
-          initialValue: success ? '' : this.state.values.email,
+          initialValue: status ? '' : this.state.values.email,
           validationCallback: function validationCallback() {
-            return emailError ? 'error' : success ? 'success' : null;
+            return emailError ? 'error' : status ? 'success' : null;
           },
           help: emailError ? emailError : '',
           callback: function callback(event) {
