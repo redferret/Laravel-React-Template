@@ -45362,10 +45362,14 @@ __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPA
     __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus('We have e-mailed your password reset link!');
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   }).catch(function (error) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
-      __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
-      __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
-    });
+    try {
+      Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
+        __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
+      });
+    } catch (error) {
+      console.error('Unable to parse JSON', error);
+    }
+    __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   });
 });
 
