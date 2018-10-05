@@ -45360,6 +45360,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */], function (payload) {
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
     __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus('We have e-mailed your password reset link!');
+    __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   }).catch(function (error) {
     Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
       __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
