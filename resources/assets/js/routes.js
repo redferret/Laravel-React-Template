@@ -18,3 +18,15 @@ const ROOT = Router.route(Constants.ROOT_URL);
 Router.registerRoute(Constants.GET_EXAMPLE_MESSAGE, args => {
   return ROOT + '/getExampleMessage/' + args.id;
 });
+
+Router.registerRoute(Constants.LOG_IN, args => {
+  return ROOT + '/login';
+});
+
+Router.registerRoute(Constants.LOG_OUT, args => {
+  return ROOT + '/logout';
+});
+
+Router.registerRoute(Constants.REGISTER, args => {
+  return ROOT + '/register';
+});

@@ -1,69 +1,30 @@
-import React, { Component } from 'react';
+// import ForgotPasswordForm from './ForgotPasswordForm.js';
+// import ResetPasswordForm from './ResetPasswordForm.js';
+import App from './App.js';
+import AppNavbar from './AppNavbar.js';
+import LoginForm from './auth/LoginForm.js';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import RegisterForm from './auth/RegisterForm.js';
 
-import AppDispatcher from '../dispatcher.js';
-import ExampleStore from '../stores/ExampleStore.js';
+let AppDiv = document.getElementById('app');
+let ForgotPasswordDiv = document.getElementById('forgotpassword');
+let GuestNavbarDiv = document.getElementById('navbar-guest');
+let LoginDiv = document.getElementById('login');
+let RegisterDiv = document.getElementById('register');
+let ResetPasswordDiv = document.getElementById('resetpassword');
+let UserNavbarDiv = document.getElementById('navbar-user');
 
-import { Label } from 'react-bootstrap';
-
-import {
-  GET_EXAMPLE_MESSAGE,
-  MAIN_ID
-} from '../constants.js';
-
-export default class Main extends Component {
-
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-      exampleMessage: ExampleStore.getExampleMessage()
-    }
-  }
-
-  _onChange() {
-    this.setState({
-      exampleMessage: ExampleStore.getExampleMessage()
-    })
-  }
-
-  componentDidMount() {
-    ExampleStore.on(MAIN_ID, this._onChange.bind(this));
-
-    AppDispatcher.dispatch({
-      action: GET_EXAMPLE_MESSAGE,
-      data: {
-        id: 1
-      },
-      emitOn: [{
-        store: ExampleStore,
-        componentIds: [MAIN_ID]
-      }]
-    })
-  }
-
-  componentWillUnmount() {
-    ExampleStore.removeListener(MAIN_ID, this._onChange.bind(this));
-  }
-
-  render() {
-    return (
-      <div>
-        <div>
-            Your Laravel/React App!! This example will show a message...
-        </div>
-        <h3>
-          <Label bsStyle='success'>
-              {this.state.exampleMessage}
-          </Label>
-        </h3>
-      </div>
-    );
-  }
+if (GuestNavbarDiv) {
+  ReactDOM.render(<AppNavbar guest />, GuestNavbarDiv);
+} else if (UserNavbarDiv) {
+  ReactDOM.render(<AppNavbar />, UserNavbarDiv);
 }
 
-let RootElement = document.getElementById('root');
-
-if (RootElement) {
-  ReactDOM.render(<Main />, RootElement);
+if (AppDiv) {
+  ReactDOM.render(<App />, AppDiv);
+} else if (LoginDiv) {
+  ReactDOM.render(<LoginForm />, LoginDiv);
+} else if (RegisterDiv) {
+  ReactDOM.render(<RegisterForm />, RegisterDiv);
 }

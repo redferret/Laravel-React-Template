@@ -14,11 +14,6 @@ class ExampleStore extends EventEmitter {
   getExampleMessage() {
     return this._message;
   }
-
-  emitChange(id) {
-    this.emit(id);
-  }
-
 };
 
 export default new ExampleStore();

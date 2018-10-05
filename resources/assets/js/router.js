@@ -15,12 +15,18 @@ class WebRouter {
 
   route(name, args) {
     let route = this._routes.get(name);
-    return route(args);
+    if (route instanceof Function) {
+      return route(args);
+    }
+    console.error('The route "'+name+'" was not registered or is not a function');
   }
 
   method(name, data) {
     let method = this._methods.get(name);
-    return method(data);
+    if (method instanceof Function) {
+      return method(data);
+    }
+    console.error('The method "'+name+'" was not registered or is not a function');
   }
 }
 
@@ -29,7 +35,7 @@ let Router = new WebRouter();
 const HEADERS = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  'X-CSRF-TOKEN': window.axios.defaults.headers.common['X-CSRF-TOKEN']
 };
 
 Router.registerMethod('DELETE', data => {
