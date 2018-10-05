@@ -23,6 +23,14 @@ class Actions {
   }
 }
 
+export function relocateTo(url) {
+  window.location.replace(url);
+}
+
+export function href(url) {
+  window.location.href = url;
+}
+
 export function handleError(error) {
   console.error('HTTP request failed', error);
 }

@@ -494,9 +494,11 @@ var SHOW_PASSWORD_RESET = 'show-password-reset';
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["e"] = relocateTo;
+/* harmony export (immutable) */ __webpack_exports__["c"] = href;
 /* unused harmony export handleError */
 /* harmony export (immutable) */ __webpack_exports__["a"] = checkStatus;
-/* harmony export (immutable) */ __webpack_exports__["c"] = parseJSON;
+/* harmony export (immutable) */ __webpack_exports__["d"] = parseJSON;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -535,6 +537,14 @@ var Actions = function () {
 
   return Actions;
 }();
+
+function relocateTo(url) {
+  window.location.replace(url);
+}
+
+function href(url) {
+  window.location.href = url;
+}
 
 function handleError(error) {
   console.error('HTTP request failed', error);
@@ -36973,7 +36983,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* GET_EXAMPLE_MESSAGE */], function (payload) {
-  fetch(__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* GET_EXAMPLE_MESSAGE */], { id: payload.data.id }), __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].method('GET')).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["c" /* parseJSON */]).then(function (data) {
+  fetch(__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* GET_EXAMPLE_MESSAGE */], { id: payload.data.id }), __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].method('GET')).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */]).then(function (data) {
     __WEBPACK_IMPORTED_MODULE_3__stores_ExampleStore_js__["a" /* default */].setExampleMessage(data.message);
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   }).catch(function (error) {
@@ -37045,9 +37055,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["b" /* LOG_IN */], function (payload) {
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["b" /* LOG_IN */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
-    window.location.replace(response.url);
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["e" /* relocateTo */])(response.url);
   }).catch(function (error) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["c" /* parseJSON */])(error.response).then(function (errors) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
       __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
       __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
     });
@@ -37070,7 +37080,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_2__constants_js__["c" /* LOG_OUT */], function (payload) {
   fetch(__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_2__constants_js__["c" /* LOG_OUT */]), __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].method('POST')).then(function (response) {
-    window.location.href = __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_2__constants_js__["b" /* LOG_IN */]);
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["c" /* href */])(__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_2__constants_js__["b" /* LOG_IN */]));
   });
 });
 
@@ -37092,9 +37102,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["e" /* REGISTER */], function (payload) {
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["e" /* REGISTER */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
-    window.location.replace(response.url);
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["e" /* relocateTo */])(response.url);
   }).catch(function (error) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["c" /* parseJSON */])(error.response).then(function (errors) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
       __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
       __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
     });

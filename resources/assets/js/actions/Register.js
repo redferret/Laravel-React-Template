@@ -1,4 +1,4 @@
-import Actions, { checkStatus, parseJSON } from './AppActions.js';
+import Actions, { checkStatus, parseJSON, relocateTo } from './AppActions.js';
 import AuthStore from '../stores/AuthStore.js';
 import Router from '../router.js';
 
@@ -8,7 +8,7 @@ Actions.register(REGISTER, payload => {
   fetch(Router.route(REGISTER), Router.method('POST', payload.values))
   .then(checkStatus)
   .then(response => {
-    window.location.replace(response.url);
+    relocateTo(response.url);
   }).catch(error => {
     parseJSON(error.response).then(errors => {
       AuthStore.setErrors(errors);
