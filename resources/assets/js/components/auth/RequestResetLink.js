@@ -72,7 +72,7 @@ export default class RequestResetLink extends React.Component {
   render() {
     let errors = this.state.errors;
     let emailError = typeof errors !== 'undefined'? errors.email : null;
-    let message = this.state.message? '' : this.state.message;
+    let message = this.state.message;
 
     return (
       <Form horizontal>

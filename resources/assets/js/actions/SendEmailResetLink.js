@@ -9,7 +9,6 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
   .then(checkStatus)
   .then(response => {
     AuthStore.setSuccess('We have e-mailed your password reset link!');
-    Actions.relocateTo(response.url);
   }).catch(error => {
     parseJSON(error.response).then(errors => {
       AuthStore.setErrors(errors);
