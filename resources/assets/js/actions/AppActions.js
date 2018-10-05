@@ -13,6 +13,14 @@ class Actions {
     }
   }
 
+  relocateTo(url) {
+    window.location.replace(url);
+  }
+  
+  setUrl(url) {
+    window.location.href = url;
+  }
+
   finish(payload) {
     payload.emitOn.map(emitter => {
       var store = emitter.store;
@@ -21,14 +29,6 @@ class Actions {
       })
     });
   }
-}
-
-export function relocateTo(url) {
-  window.location.replace(url);
-}
-
-export function href(url) {
-  window.location.href = url;
 }
 
 export function handleError(error) {
