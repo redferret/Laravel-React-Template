@@ -11,9 +11,11 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
     AuthStore.setStatus('We have e-mailed your password reset link!');
     Actions.finish(payload);
   }).catch(error => {
-    parseJSON(error.response).then(errors => {
-      AuthStore.setErrors(errors);
-      Actions.finish(payload);
-    });
+    try {
+      parseJSON(error.response).then(errors => {
+        AuthStore.setErrors(errors);
+      });
+    } catch(error) {console.error('Unable to parse JSON', error);}
+    Actions.finish(payload);
   });
 });
