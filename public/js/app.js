@@ -1571,6 +1571,7 @@ var AuthStore = function (_EventEmitter) {
 
     var _this = _possibleConstructorReturn(this, (AuthStore.__proto__ || Object.getPrototypeOf(AuthStore)).call(this));
 
+    _this._message = '';
     _this._errors = {
       errors: ''
     };
@@ -1578,6 +1579,16 @@ var AuthStore = function (_EventEmitter) {
   }
 
   _createClass(AuthStore, [{
+    key: 'setSuccess',
+    value: function setSuccess(message) {
+      this._message = message;
+    }
+  }, {
+    key: 'getMessage',
+    value: function getMessage() {
+      return this._message;
+    }
+  }, {
     key: 'setErrors',
     value: function setErrors(errors) {
       this._errors = errors;
@@ -22952,7 +22963,7 @@ var RenderManager = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(147);
-module.exports = __webpack_require__(345);
+module.exports = __webpack_require__(344);
 
 
 /***/ }),
@@ -76844,7 +76855,8 @@ var RequestResetLink = function (_React$Component) {
     key: '_onChange',
     value: function _onChange() {
       this.setState({
-        errors: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getErrors()
+        errors: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getErrors(),
+        message: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getMessage()
       });
     }
   }, {
@@ -76890,14 +76902,16 @@ var RequestResetLink = function (_React$Component) {
 
       var errors = this.state.errors;
       var emailError = typeof errors !== 'undefined' ? errors.email : null;
+      var message = this.state.message ? '' : this.state.message;
+
       return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["e" /* Form */],
         { horizontal: true },
         __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Input_js__["a" /* default */], { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com',
-          label: 'Enter Your Email Address',
+          label: message ? message : 'Enter Your Email Address',
           initialValue: this.state.values.email,
           validationCallback: function validationCallback() {
-            return emailError ? 'error' : null;
+            return emailError ? 'error' : message ? 'success' : null;
           },
           help: emailError ? emailError : '',
           callback: function callback(event) {
@@ -76926,8 +76940,7 @@ var RequestResetLink = function (_React$Component) {
 /* harmony default export */ __webpack_exports__["a"] = (RequestResetLink);
 
 /***/ }),
-/* 344 */,
-/* 345 */
+/* 344 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -31,7 +31,8 @@ export default class RequestResetLink extends React.Component {
 
   _onChange() {
     this.setState({
-      errors: AuthStore.getErrors()
+      errors: AuthStore.getErrors(),
+      message: AuthStore.getMessage()
     })
   }
 
@@ -70,12 +71,14 @@ export default class RequestResetLink extends React.Component {
   render() {
     let errors = this.state.errors;
     let emailError = typeof errors !== 'undefined'? errors.email : null;
+    let message = this.state.message? '' : this.state.message;
+
     return (
       <Form horizontal>
         <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com'
-          label='Enter Your Email Address'
+          label={message? message : 'Enter Your Email Address'}
           initialValue={this.state.values.email}
-          validationCallback={() => emailError? 'error' : null}
+          validationCallback={() => emailError? 'error' : (message? 'success' : null)}
           help={emailError? emailError : ''}
           callback={(event) => this.handleInputChanged(event)} autoComplete='on'/>
 
