@@ -1,4 +1,4 @@
-import Actions, { checkStatus, handleError } from './AppActions.js';
+import Actions, { checkStatus } from './AppActions.js';
 import AuthStore from '../stores/AuthStore.js';
 import Router from '../router.js';
 
@@ -10,5 +10,10 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
   .then(response => {
     AuthStore.setSuccess('We have e-mailed your password reset link!');
     Actions.relocateTo(response.url);
-  }).catch(handleError);
+  }).catch(error => {
+    parseJSON(error.response).then(errors => {
+      AuthStore.setErrors(errors);
+      Actions.finish(payload);
+    });
+  });
 });
