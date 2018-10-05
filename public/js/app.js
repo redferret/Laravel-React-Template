@@ -45362,7 +45362,7 @@ __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPA
     __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setSuccess('We have e-mailed your password reset link!');
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].relocateTo(response.url);
   }).catch(function (error) {
-    parseJSON(error.response).then(function (errors) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
       __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
       __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
     });

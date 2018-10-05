@@ -1,4 +1,4 @@
-import Actions, { checkStatus } from './AppActions.js';
+import Actions, { checkStatus, parseJSON } from './AppActions.js';
 import AuthStore from '../stores/AuthStore.js';
 import Router from '../router.js';
 
