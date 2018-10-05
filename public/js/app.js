@@ -766,23 +766,6 @@ if (token) {
 __webpack_require__(50);
 __webpack_require__(56);
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-
-// import Echo from 'laravel-echo'
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
-
 /***/ }),
 /* 8 */
 /***/ (function(module, exports) {
@@ -14785,21 +14768,10 @@ module.exports = __webpack_require__(72);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__RenderManager_js__ = __webpack_require__(71);
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
-
 __webpack_require__(7);
 
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 __webpack_require__(18);
+
 
 
 __WEBPACK_IMPORTED_MODULE_0__RenderManager_js__["a" /* default */].renderElements();
