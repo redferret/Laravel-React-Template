@@ -1571,21 +1571,37 @@ var AuthStore = function (_EventEmitter) {
 
     var _this = _possibleConstructorReturn(this, (AuthStore.__proto__ || Object.getPrototypeOf(AuthStore)).call(this));
 
-    _this._message = null;
-    _this._errors = {
-      errors: ''
-    };
+    _this._message = '';
+    _this._errors = null;
+    _this._status = null;
     return _this;
   }
 
   _createClass(AuthStore, [{
+    key: 'reset',
+    value: function reset() {
+      this._message = '';
+      this._errors = null;
+      this._status = null;
+    }
+  }, {
     key: 'setStatus',
-    value: function setStatus(message) {
-      this._message = message;
+    value: function setStatus(status) {
+      this._status = status;
     }
   }, {
     key: 'getStatus',
     value: function getStatus() {
+      return this._status;
+    }
+  }, {
+    key: 'setMessage',
+    value: function setMessage(message) {
+      this._message = message;
+    }
+  }, {
+    key: 'getMessage',
+    value: function getMessage() {
       return this._message;
     }
   }, {
@@ -1596,12 +1612,7 @@ var AuthStore = function (_EventEmitter) {
   }, {
     key: 'getErrors',
     value: function getErrors() {
-      return this._errors.errors;
-    }
-  }, {
-    key: 'getMessage',
-    value: function getMessage() {
-      return this._errors.message;
+      return this._errors;
     }
   }]);
 
@@ -45359,17 +45370,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */], function (payload) {
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
-    __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus('We have e-mailed your password reset link!');
+    __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setMessage('If your email exists you\'ll get a reset link!');
+    __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus(response.status);
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   }).catch(function (error) {
     try {
-      Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
-        __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
-      });
-    } catch (error) {
-      console.error('Unable to parse JSON', error);
+      if (error.response) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
+          __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setMessage(errors.message);
+          __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus(error.response.status);
+          __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
+          __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
+        });
+      }
+    } catch (exception) {
+      console.error('Critical Error Occured', exception);
     }
-    __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   });
 });
 
@@ -76866,10 +76882,11 @@ var RequestResetLink = function (_React$Component) {
     value: function _onChange() {
       this.setState({
         errors: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getErrors(),
-        status: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getStatus()
+        status: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getStatus(),
+        message: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getMessage(),
+        email: ''
       });
-      __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].setStatus(null);
-      __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].setErrors(null);
+      __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].reset();
     }
   }, {
     key: 'componentDidMount',
@@ -76913,9 +76930,10 @@ var RequestResetLink = function (_React$Component) {
       var _this2 = this;
 
       var errors = this.state.errors;
-      var emailError = typeof errors !== 'undefined' ? errors.email : null;
+      var emailError = errors ? errors.email : null;
       var status = this.state.status;
-
+      var message = this.state.message;
+      var validation = emailError ? 'error' : status ? status == 200 ? 'success' : 'error' : null;
       return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["f" /* Form */],
         { horizontal: true },
@@ -76927,16 +76945,16 @@ var RequestResetLink = function (_React$Component) {
             { smOffset: 4, sm: 4 },
             status ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["a" /* Alert */],
-              { bsStyle: 'success' },
-              status
+              { bsStyle: status == 200 ? 'success' : 'danger' },
+              message
             ) : null
           )
         ),
         __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Input_js__["a" /* default */], { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com',
           label: 'Enter Your Email Address',
-          initialValue: status ? '' : this.state.values.email,
+          initialValue: this.state.values.email,
           validationCallback: function validationCallback() {
-            return emailError ? 'error' : status ? 'success' : null;
+            return validation;
           },
           help: emailError ? emailError : '',
           callback: function callback(event) {

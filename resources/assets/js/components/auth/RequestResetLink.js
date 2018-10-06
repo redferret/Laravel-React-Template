@@ -33,10 +33,11 @@ export default class RequestResetLink extends React.Component {
   _onChange() {
     this.setState({
       errors: AuthStore.getErrors(),
-      status: AuthStore.getStatus()
+      status: AuthStore.getStatus(),
+      message: AuthStore.getMessage(),
+      email: ''
     });
-    AuthStore.setStatus(null);
-    AuthStore.setErrors(null);
+    AuthStore.reset();
   }
 
   componentDidMount() {
@@ -72,21 +73,23 @@ export default class RequestResetLink extends React.Component {
   }
 
   render() {
-    let errors = this.state.errors;
-    let emailError = typeof errors !== 'undefined'? errors.email : null;
-    let status = this.state.status;
 
+    let errors = this.state.errors;
+    let emailError = errors? errors.email : null;
+    let status = this.state.status;
+    let message = this.state.message;
+    let validation = emailError? 'error' : (status? (status == 200 ? 'success' : 'error') : null);
     return (
       <Form horizontal>
         <FormGroup>
           <Col smOffset={4} sm={4}>
-            {status? <Alert bsStyle='success'>{status}</Alert> : null}
+            {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
           </Col>
         </FormGroup>
         <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com'
           label='Enter Your Email Address'
-          initialValue={status? '' : this.state.values.email}
-          validationCallback={() => emailError? 'error' : (status? 'success' : null)}
+          initialValue={this.state.values.email}
+          validationCallback={() => validation}
           help={emailError? emailError : ''}
           callback={(event) => this.handleInputChanged(event)} autoComplete='on'/>
 

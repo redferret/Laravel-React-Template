@@ -16,7 +16,7 @@ class Actions {
   relocateTo(url) {
     window.location.replace(url);
   }
-  
+
   setUrl(url) {
     window.location.href = url;
   }

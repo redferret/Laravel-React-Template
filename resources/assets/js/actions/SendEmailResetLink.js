@@ -8,14 +8,21 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
   fetch(Router.route(SEND_PASSWORD_RESET), Router.method('POST', payload.values))
   .then(checkStatus)
   .then(response => {
-    AuthStore.setStatus('We have e-mailed your password reset link!');
+    AuthStore.setMessage('If your email exists you\'ll get a reset link!');
+    AuthStore.setStatus(response.status);
     Actions.finish(payload);
   }).catch(error => {
     try {
-      parseJSON(error.response).then(errors => {
-        AuthStore.setErrors(errors);
-      });
-    } catch(error) {console.error('Unable to parse JSON', error);}
-    Actions.finish(payload);
+      if (error.response) {
+        parseJSON(error.response).then(errors => {
+          AuthStore.setMessage(errors.message);
+          AuthStore.setStatus(error.response.status);
+          AuthStore.setErrors(errors);
+          Actions.finish(payload);
+        });
+      }
+    } catch(exception) {
+      console.error('Critical Error Occured', exception);
+    }
   });
 });
