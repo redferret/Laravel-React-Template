@@ -5,8 +5,7 @@ import { GET_EXAMPLE_MESSAGE } from '../constants.js';
 import ExampleStore from '../stores/ExampleStore.js';
 
 Actions.register(GET_EXAMPLE_MESSAGE, payload => {
-  fetch(Router.route(GET_EXAMPLE_MESSAGE, {id: payload.data.id}),
-    Router.method('GET'))
+  fetch(Router.route(GET_EXAMPLE_MESSAGE, {id: payload.id}), Router.method('GET'))
   .then(checkStatus)
   .then(parseJSON)
   .then(data => {

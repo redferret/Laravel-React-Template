@@ -45255,7 +45255,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* GET_EXAMPLE_MESSAGE */], function (payload) {
-  fetch(__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* GET_EXAMPLE_MESSAGE */], { id: payload.data.id }), __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].method('GET')).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */]).then(function (data) {
+  fetch(__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_2__constants_js__["a" /* GET_EXAMPLE_MESSAGE */], { id: payload.id }), __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].method('GET')).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */]).then(function (data) {
     __WEBPACK_IMPORTED_MODULE_3__stores_ExampleStore_js__["a" /* default */].setExampleMessage(data.message);
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   }).catch(function (error) {
@@ -45553,9 +45553,7 @@ var App = function (_React$Component) {
 
       __WEBPACK_IMPORTED_MODULE_1__dispatcher_js__["a" /* default */].dispatch({
         action: __WEBPACK_IMPORTED_MODULE_4__constants_js__["a" /* GET_EXAMPLE_MESSAGE */],
-        data: {
-          id: 1
-        },
+        id: 1,
         emitOn: [{
           store: __WEBPACK_IMPORTED_MODULE_2__stores_ExampleStore_js__["a" /* default */],
           componentIds: [__WEBPACK_IMPORTED_MODULE_4__constants_js__["d" /* MAIN_ID */]]

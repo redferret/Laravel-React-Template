@@ -31,9 +31,7 @@ export default class App extends React.Component {
 
     AppDispatcher.dispatch({
       action: GET_EXAMPLE_MESSAGE,
-      data: {
-        id: 1
-      },
+      id: 1,
       emitOn: [{
         store: ExampleStore,
         componentIds: [MAIN_ID]
