@@ -8,7 +8,7 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
   fetch(Router.route(SEND_PASSWORD_RESET), Router.method('POST', payload.values))
   .then(checkStatus)
   .then(response => {
-    AuthStore.setMessage('If an account matching the given email is found you will recieve an email shortly');
+    AuthStore.setMessage('If an account matching the given email is found you will receive an email shortly');
     AuthStore.setStatus(response.status);
     Actions.finish(payload);
   }).catch(error => {
