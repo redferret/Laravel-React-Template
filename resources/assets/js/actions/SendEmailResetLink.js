@@ -8,16 +8,18 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
   fetch(Router.route(SEND_PASSWORD_RESET), Router.method('POST', payload.values))
   .then(checkStatus)
   .then(response => {
-    AuthStore.setMessage('If your email exists you\'ll get a reset link!');
+    AuthStore.setMessage('If an account matching the given email is found you will recieve an email shortly');
     AuthStore.setStatus(response.status);
     Actions.finish(payload);
   }).catch(error => {
     try {
       if (error.response) {
-        parseJSON(error.response).then(errors => {
-          AuthStore.setMessage(errors.message);
-          AuthStore.setStatus(error.response.status);
-          AuthStore.setErrors(errors);
+        AuthStore.setStatus(error.response.status);
+        parseJSON(error.response).then(responseJson => {
+          AuthStore.setMessage(responseJson.message);
+          if (responseJson.errors) {
+            AuthStore.setErrors(responseJson.errors.errors);
+          }
           Actions.finish(payload);
         });
       }

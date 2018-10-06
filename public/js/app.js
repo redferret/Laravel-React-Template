@@ -45271,8 +45271,8 @@ __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPA
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["b" /* LOG_IN */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].relocateTo(response.url);
   }).catch(function (error) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
-      __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (responseJson) {
+      __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(responseJson.errors);
       __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
     });
   });
@@ -45318,8 +45318,8 @@ __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPA
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["e" /* REGISTER */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].relocateTo(response.url);
   }).catch(function (error) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
-      __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
+    Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (responseJson) {
+      __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(responseJson.errors);
       __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
     });
   });
@@ -45370,16 +45370,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */], function (payload) {
   fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
-    __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setMessage('If your email exists you\'ll get a reset link!');
+    __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setMessage('If an account matching the given email is found you will recieve an email shortly');
     __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus(response.status);
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
   }).catch(function (error) {
     try {
       if (error.response) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (errors) {
-          __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setMessage(errors.message);
-          __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus(error.response.status);
-          __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(errors);
+        __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus(error.response.status);
+        Object(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["d" /* parseJSON */])(error.response).then(function (responseJson) {
+          __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setMessage(responseJson.message);
+          if (responseJson.errors) {
+            __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setErrors(responseJson.errors.errors);
+          }
           __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
         });
       }
@@ -76612,8 +76614,8 @@ var LoginForm = function (_React$Component) {
       var _this2 = this;
 
       var errors = this.state.errors;
-      var emailError = typeof errors !== 'undefined' ? errors.email : null;
-      var passwordError = typeof errors !== 'undefined' ? errors.password : null;
+      var emailError = errors ? errors.email : null;
+      var passwordError = errors ? errors.password : null;
       return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["f" /* Form */],
         { horizontal: true },
@@ -76771,8 +76773,8 @@ var RegisterForm = function (_React$Component) {
       var _this2 = this;
 
       var errors = this.state.errors;
-      var emailError = typeof errors !== 'undefined' ? errors.email : null;
-      var passwordError = typeof errors !== 'undefined' ? errors.password : null;
+      var emailError = errors ? errors.email : null;
+      var passwordError = errors ? errors.password : null;
       return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         __WEBPACK_IMPORTED_MODULE_6_react_bootstrap__["f" /* Form */],
         { horizontal: true },

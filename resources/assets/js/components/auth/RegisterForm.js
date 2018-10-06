@@ -65,8 +65,8 @@ export default class RegisterForm extends React.Component {
 
   render() {
     let errors = this.state.errors;
-    let emailError = typeof errors !== 'undefined'? errors.email : null;
-    let passwordError = typeof errors !== 'undefined'? errors.password : null;
+    let emailError = errors? errors.email : null;
+    let passwordError = errors? errors.password : null;
     return (
       <Form horizontal>
         <Input smOffset={4} sm={4} name='name' type='text' placeholder='John Doe' label='Name'

@@ -10,8 +10,8 @@ Actions.register(REGISTER, payload => {
   .then(response => {
     Actions.relocateTo(response.url);
   }).catch(error => {
-    parseJSON(error.response).then(errors => {
-      AuthStore.setErrors(errors);
+    parseJSON(error.response).then(responseJson => {
+      AuthStore.setErrors(responseJson.errors);
       Actions.finish(payload);
     });
   });
