@@ -31,11 +31,14 @@ export default class RequestResetLink extends React.Component {
   }
 
   _onChange() {
+    let newValues = this.state.values;
+    newValues['email'] = '';
+    
     this.setState({
       errors: AuthStore.getErrors(),
       status: AuthStore.getStatus(),
       message: AuthStore.getMessage(),
-      email: ''
+      values: newValues
     });
     AuthStore.reset();
   }

@@ -76884,11 +76884,14 @@ var RequestResetLink = function (_React$Component) {
   _createClass(RequestResetLink, [{
     key: '_onChange',
     value: function _onChange() {
+      var newValues = this.state.values;
+      newValues['email'] = '';
+
       this.setState({
         errors: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getErrors(),
         status: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getStatus(),
         message: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].getMessage(),
-        email: ''
+        values: newValues
       });
       __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */].reset();
     }
