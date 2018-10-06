@@ -829,9 +829,9 @@ function toArray(children) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return LOG_IN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return LOG_OUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return REGISTER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return ROOT_URL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SHOW_PASSWORD_RESET; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SEND_PASSWORD_RESET; });
+/* unused harmony export ROOT_URL */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SHOW_PASSWORD_RESET; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SEND_PASSWORD_RESET; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return RESET_PASSWORD_REQUEST; });
 
 // Add all your constants here. These can be constants for your actions/routes.
@@ -1252,13 +1252,18 @@ var WebRouter = function () {
       this._methods.set(name, method);
     }
   }, {
+    key: 'root',
+    value: function root(_root) {
+      this._root = _root;
+    }
+  }, {
     key: 'route',
     value: function route(name, args) {
       var route = this._routes.get(name);
       if (route instanceof Function) {
-        return route(args);
+        return '' + this._root + route(args);
       }
-      console.error('The route "' + name + '" was not registered or is not a function');
+      console.error('The route ' + name + ' was not registered or is not a function');
     }
   }, {
     key: 'method',
@@ -1267,7 +1272,7 @@ var WebRouter = function () {
       if (method instanceof Function) {
         return method(data);
       }
-      console.error('The method "' + name + '" was not registered or is not a function');
+      console.error('The method ' + name + ' was not registered or is not a function');
     }
   }]);
 
@@ -1313,6 +1318,11 @@ Router.registerMethod('GET', function (data) {
     body: JSON.stringify(data)
   };
 });
+
+/**
+ * Root route for the application
+ */
+Router.root($('meta[name="rootURL"]').attr('content'));
 
 /* harmony default export */ __webpack_exports__["a"] = (Router);
 
@@ -45368,8 +45378,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */], function (payload) {
-  fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SEND_PASSWORD_RESET */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
+__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["g" /* SEND_PASSWORD_RESET */], function (payload) {
+  fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["g" /* SEND_PASSWORD_RESET */]), __WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].method('POST', payload.values)).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
     __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setMessage('If an account matching the given email is found you will receive an email shortly');
     __WEBPACK_IMPORTED_MODULE_1__stores_AuthStore_js__["a" /* default */].setStatus(response.status);
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].finish(payload);
@@ -45407,8 +45417,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["i" /* SHOW_PASSWORD_RESET */], function (payload) {
-  fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["i" /* SHOW_PASSWORD_RESET */])).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
+__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].register(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SHOW_PASSWORD_RESET */], function (payload) {
+  fetch(__WEBPACK_IMPORTED_MODULE_2__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_3__constants_js__["h" /* SHOW_PASSWORD_RESET */])).then(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["a" /* checkStatus */]).then(function (response) {
     __WEBPACK_IMPORTED_MODULE_0__AppActions_js__["b" /* default */].relocateTo(response.url);
   }).catch(__WEBPACK_IMPORTED_MODULE_0__AppActions_js__["c" /* handleError */]);
 });
@@ -45425,39 +45435,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /**
- * Root route for the application
- */
-__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["g" /* ROOT_URL */], function (args) {
-  return $('meta[name="rootURL"]').attr('content');
-});
-var ROOT = __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_0__constants_js__["g" /* ROOT_URL */]);
-
-/**
  * Register the rest of your routes below. The following can be deleted or
  * used for future reference.
  */
 
 __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["a" /* GET_EXAMPLE_MESSAGE */], function (args) {
-  return ROOT + '/getExampleMessage/' + args.id;
+  return '/getExampleMessage/' + args.id;
 });
 
 __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["b" /* LOG_IN */], function (args) {
-  return ROOT + '/login';
+  return '/login';
 });
 __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["c" /* LOG_OUT */], function (args) {
-  return ROOT + '/logout';
+  return '/logout';
 });
 __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["e" /* REGISTER */], function (args) {
-  return ROOT + '/register';
+  return '/register';
 });
-__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["i" /* SHOW_PASSWORD_RESET */], function (args) {
-  return ROOT + '/password/reset';
+__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["h" /* SHOW_PASSWORD_RESET */], function (args) {
+  return '/password/reset';
 });
-__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["h" /* SEND_PASSWORD_RESET */], function (args) {
-  return ROOT + '/password/email';
+__WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["g" /* SEND_PASSWORD_RESET */], function (args) {
+  return '/password/email';
 });
 __WEBPACK_IMPORTED_MODULE_1__router_js__["a" /* default */].registerRoute(__WEBPACK_IMPORTED_MODULE_0__constants_js__["f" /* RESET_PASSWORD_REQUEST */], function (args) {
-  return ROOT + '/password/reset';
+  return '/password/reset';
 });
 
 /***/ }),
@@ -76650,7 +76652,7 @@ var LoginForm = function (_React$Component) {
             ),
             __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'a',
-              { href: __WEBPACK_IMPORTED_MODULE_4__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_5__constants_js__["i" /* SHOW_PASSWORD_RESET */]) },
+              { href: __WEBPACK_IMPORTED_MODULE_4__router_js__["a" /* default */].route(__WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* SHOW_PASSWORD_RESET */]) },
               'Forgot Password'
             )
           )
@@ -76918,7 +76920,7 @@ var RequestResetLink = function (_React$Component) {
     key: 'sendResetLink',
     value: function sendResetLink() {
       __WEBPACK_IMPORTED_MODULE_0__dispatcher_js__["a" /* default */].dispatch({
-        action: __WEBPACK_IMPORTED_MODULE_5__constants_js__["h" /* SEND_PASSWORD_RESET */],
+        action: __WEBPACK_IMPORTED_MODULE_5__constants_js__["g" /* SEND_PASSWORD_RESET */],
         values: this.state.values,
         emitOn: [{
           store: __WEBPACK_IMPORTED_MODULE_2__stores_AuthStore_js__["a" /* default */],

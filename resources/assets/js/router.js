@@ -13,12 +13,16 @@ class WebRouter {
     this._methods.set(name, method);
   }
 
+  root(root) {
+    this._root = root;
+  }
+
   route(name, args) {
     let route = this._routes.get(name);
     if (route instanceof Function) {
-      return route(args);
+      return `${this._root}${route(args)}`;
     }
-    console.error('The route "'+name+'" was not registered or is not a function');
+    console.error(`The route ${name} was not registered or is not a function`);
   }
 
   method(name, data) {
@@ -26,7 +30,7 @@ class WebRouter {
     if (method instanceof Function) {
       return method(data);
     }
-    console.error('The method "'+name+'" was not registered or is not a function');
+    console.error(`The method ${name} was not registered or is not a function`);
   }
 }
 
@@ -69,5 +73,10 @@ Router.registerMethod('GET', data => {
     body: JSON.stringify(data)
   };
 });
+
+/**
+ * Root route for the application
+ */
+Router.root($('meta[name="rootURL"]').attr('content'));
 
 export default Router;
