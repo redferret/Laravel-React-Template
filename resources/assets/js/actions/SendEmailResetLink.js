@@ -22,6 +22,8 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
           }
           Actions.finish(payload);
         });
+      } else {
+        console.error('Critical Error Occured', exception);
       }
     } catch(exception) {
       console.error('Critical Error Occured', exception);
