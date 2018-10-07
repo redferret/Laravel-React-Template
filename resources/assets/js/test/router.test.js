@@ -50,6 +50,11 @@ test('checkStatus throws Error on status not in the range [200, 300)', () => {
       checkStatus(response)
     };
     expect(test).toThrow(Error);
+    try {
+      checkStatus(response);
+    } catch (error) {
+      expect(error.response).toBe(response);
+    }
   });
 });
 
