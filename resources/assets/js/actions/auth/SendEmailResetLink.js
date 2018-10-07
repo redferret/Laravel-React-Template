@@ -1,8 +1,8 @@
-import Actions from './AppActions.js';
-import AuthStore from '../stores/AuthStore.js';
-import Router, { checkStatus, parseJSON } from '../router.js';
+import Actions from '../AppActions.js';
+import AuthStore from '../../stores/AuthStore.js';
+import Router, { checkStatus, parseJSON } from '../../router.js';
 
-import { SEND_PASSWORD_RESET } from '../constants.js';
+import { SEND_PASSWORD_RESET } from '../../constants.js';
 
 Actions.register(SEND_PASSWORD_RESET, payload => {
   fetch(Router.route(SEND_PASSWORD_RESET), Router.method('POST', payload.values))

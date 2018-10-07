@@ -1,8 +1,8 @@
-import Actions from './AppActions.js';
-import AuthStore from '../stores/AuthStore.js';
-import Router, { checkStatus, parseJSON } from '../router.js';
+import Actions from '../AppActions.js';
+import AuthStore from '../../stores/AuthStore.js';
+import Router, { checkStatus, parseJSON } from '../../router.js';
 
-import { REGISTER } from '../constants.js';
+import { REGISTER } from '../../constants.js';
 
 Actions.register(REGISTER, payload => {
   fetch(Router.route(REGISTER), Router.method('POST', payload.values))
