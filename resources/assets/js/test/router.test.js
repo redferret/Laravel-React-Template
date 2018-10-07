@@ -34,5 +34,5 @@ test('Route is set and returns the expected URL', () => {
   let URL = `${testRoot}${testRoute}`
   let actualURL = Router.route(routeName, {id: testId});
 
-  expect(URL).toBe(actualURL);
+  expect(actualURL).toBe(URL);
 });
