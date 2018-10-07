@@ -1,6 +1,6 @@
-import Actions, { checkStatus, parseJSON } from './AppActions.js';
+import Actions from './AppActions.js';
 import AuthStore from '../stores/AuthStore.js';
-import Router from '../router.js';
+import Router, { checkStatus, parseJSON } from '../router.js';
 
 import { SEND_PASSWORD_RESET } from '../constants.js';
 

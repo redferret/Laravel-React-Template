@@ -1,11 +1,10 @@
 
-import Router from '../router.js';
-
-const ROOT = '/root/test';
+import Router, { checkStatus, handleError } from '../router.js';
 
 test('Root is set', () => {
-  Router.root(ROOT);
-  expect(Router._root).toBe(ROOT);
+  let TestRoot = '/root/test';
+  Router.root(TestRoot);
+  expect(Router._root).toBe(TestRoot);
 });
 
 test('Basic CRUD methods exist', () => {
@@ -35,4 +34,39 @@ test('Route is set and returns the expected URL', () => {
   let actualURL = Router.route(routeName, {id: testId});
 
   expect(actualURL).toBe(URL);
+});
+
+test('checkStatus throws Error on status not in the range [200, 300)', () => {
+  let responses = [{
+    status: 400
+  }, {
+    status: 199
+  }, {
+    status: 300
+  }];
+
+  responses.map(response => {
+    let test = () => {
+      checkStatus(response)
+    };
+    expect(test).toThrow(Error);
+  });
+});
+
+test('checkStatus returns response with a status in the range [200, 300)', () => {
+  let responses = [{
+    status: 200
+  }, {
+    status: 250
+  }, {
+    status: 299
+  }];
+
+  responses.map(response => {
+    let test = () => {
+      checkStatus(response)
+    };
+    expect(test).not.toThrow(Error);
+    expect(checkStatus(response)).toBe(response);
+  });
 });

@@ -7,7 +7,7 @@ Actions.register(LOG_OUT, payload => {
   fetch(Router.route(LOG_OUT),
     Router.method('POST')
   ).then( response => {
-    Actions.setUrl(Router.route(LOG_IN));
+    Router.setUrl(Router.route(LOG_IN));
   });
 
 });

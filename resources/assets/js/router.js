@@ -27,6 +27,14 @@ class WebRouter {
     throw new Error(`The route ${name} was not registered or is not a function`);
   }
 
+  relocateTo(url) {
+    window.location.replace(url);
+  }
+
+  setUrl(url) {
+    window.location.href = url;
+  }
+
   method(name, data) {
     let method = this._methods.get(name);
     if (method instanceof Function) {
@@ -36,7 +44,23 @@ class WebRouter {
   }
 }
 
-let Router = new WebRouter();
+export function handleError(error) {
+  console.error('HTTP request failed', error);
+}
+
+export function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  } else {
+    var error = new Error(response.statusText);
+    error.response = response;
+    throw error;
+  }
+}
+
+export function parseJSON(response) {
+  return response.json();
+}
 
 function getCSRF() {
   try {
@@ -46,6 +70,8 @@ function getCSRF() {
     return 'Not Defined';
   }
 }
+
+let Router = new WebRouter();
 
 const HEADERS = {
   'Accept': 'application/json',

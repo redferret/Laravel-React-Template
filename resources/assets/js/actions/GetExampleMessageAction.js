@@ -1,8 +1,8 @@
-
-import Actions, { checkStatus, parseJSON } from './AppActions.js';
-import Router from '../router.js';
-import { GET_EXAMPLE_MESSAGE } from '../constants.js';
+import Actions from './AppActions.js';
 import ExampleStore from '../stores/ExampleStore.js';
+import Router, { checkStatus, parseJSON } from '../router.js';
+
+import { GET_EXAMPLE_MESSAGE } from '../constants.js';
 
 Actions.register(GET_EXAMPLE_MESSAGE, payload => {
   fetch(Router.route(GET_EXAMPLE_MESSAGE, {id: payload.id}), Router.method('GET'))
