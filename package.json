@@ -16,65 +16,28 @@
     "babel-preset-react": "^6.23.0",
     "bootstrap": "^4.0.0",
     "cross-env": "^5.1",
+    "enzyme": "^3.7.0",
     "jest": "^23.6.0",
     "jquery": "^3.2",
     "laravel-mix": "^2.0",
     "lodash": "^4.17.5",
     "popper.js": "^1.12",
     "react": "^16.4.2",
+    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.4.2"
   },
   "dependencies": {
     "flux": "^3.1.3",
     "react-bootstrap": "^0.32.3"
   },
-  "bable": {
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ]
-        ]
-      },
-      "development": {
-        "presets": [
-          [
-            "env",
-            {
-              "modules": false,
-              "targets": {
-                "browsers": "> 2%",
-                "uglify": true
-              }
-            }
-          ]
-        ]
-      },
-      "production": {
-        "presets": [
-          [
-            "env",
-            {
-              "modules": false,
-              "targets": {
-                "browsers": "> 2%",
-                "uglify": true
-              }
-            }
-          ]
-        ]
-      }
-    }
-  },
   "jest": {
     "roots": [
       "<rootDir>/resources/assets/js/"
+    ],
+    "testRegex": "resources/assets/js/test/.*.test.js$",
+    "moduleFileExtensions": [
+      "js",
+      "json"
     ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"

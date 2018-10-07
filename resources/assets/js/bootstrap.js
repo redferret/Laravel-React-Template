@@ -13,6 +13,7 @@ try {
 
   require('bootstrap');
 } catch (e) {
+  console.error('Unable to load jquery');
 }
 
 /**

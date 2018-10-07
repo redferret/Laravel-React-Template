@@ -1,4 +1,6 @@
 
+import $ from 'jquery';
+
 class WebRouter {
   constructor() {
     this._routes = new Map();
@@ -22,7 +24,7 @@ class WebRouter {
     if (route instanceof Function) {
       return `${this._root}${route(args)}`;
     }
-    console.error(`The route ${name} was not registered or is not a function`);
+    throw new Error(`The route ${name} was not registered or is not a function`);
   }
 
   method(name, data) {
@@ -30,16 +32,25 @@ class WebRouter {
     if (method instanceof Function) {
       return method(data);
     }
-    console.error(`The method ${name} was not registered or is not a function`);
+    throw new Error(`The method ${name} was not registered or is not a function`);
   }
 }
 
 let Router = new WebRouter();
 
+function getCSRF() {
+  try {
+    return window.axios.defaults.headers.common['X-CSRF-TOKEN']
+  } catch (error) {
+    console.error("Couldn't get X-CSRF-TOKEN");
+    return 'Not Defined';
+  }
+}
+
 const HEADERS = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'X-CSRF-TOKEN': window.axios.defaults.headers.common['X-CSRF-TOKEN']
+  'X-CSRF-TOKEN': getCSRF()
 };
 
 Router.registerMethod('DELETE', data => {

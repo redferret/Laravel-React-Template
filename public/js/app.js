@@ -1281,10 +1281,19 @@ var WebRouter = function () {
 
 var Router = new WebRouter();
 
+function getCSRF() {
+  try {
+    return window.axios.defaults.headers.common['X-CSRF-TOKEN'];
+  } catch (error) {
+    console.error("Couldn't get X-CSRF-TOKEN");
+    return 'Not Defined';
+  }
+}
+
 var HEADERS = {
   'Accept': 'application/json',
   'Content-Type': 'application/json',
-  'X-CSRF-TOKEN': window.axios.defaults.headers.common['X-CSRF-TOKEN']
+  'X-CSRF-TOKEN': getCSRF()
 };
 
 Router.registerMethod('DELETE', function (data) {
@@ -23023,7 +23032,9 @@ try {
   window.$ = window.jQuery = __webpack_require__(89);
 
   __webpack_require__(151);
-} catch (e) {}
+} catch (e) {
+  console.error('Unable to load jquery');
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
