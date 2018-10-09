@@ -41,11 +41,11 @@ test('AppActions throws Error if action is not a function', () => {
   }).toThrow(Error);
 });
 
-test('AppDispatcher calls action, tests payload, and that the action finishes', () => {
+test('Tests the full lifecycle of an Action', () => {
 
   let emitMock = jest.spyOn(TestStore, 'emit');
   emitMock.mockClear();
-  
+
   let ACTION = 'Test-Action';
   let testPayload = {
     action: ACTION,
@@ -57,6 +57,7 @@ test('AppDispatcher calls action, tests payload, and that the action finishes', 
   };
 
   AppActions.register(ACTION, payload => {
+    expect(payload.foo).toBe('bar');
     AppActions.finish(payload);
   });
 

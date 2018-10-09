@@ -19,21 +19,37 @@ test('Basic CRUD methods exist', () => {
   })
 });
 
-test('Route is set and returns the expected URL', () => {
+describe('Route is set and returns the expected URL', () => {
+
   let testRoot = 'https://test.com';
   let routeName = 'Test Route';
   let testId = 5;
   let testRoute = `/pass/${testId}`;
 
-  Router.root(testRoot);
-  Router.registerRoute(routeName, args => {
-    return `/pass/${args.id}`;
+  beforeEach(() => {
+    Router.root(testRoot);
+    Router.registerRoute(routeName, args => {
+      return `/pass/${args.id}`;
+    });
   });
 
-  let URL = `${testRoot}${testRoute}`
-  let actualURL = Router.route(routeName, {id: testId});
+  it('tests function route and getRoute', () => {
+    let theExpectedUrl = `${testRoot}${testRoute}`
 
-  expect(actualURL).toBe(URL);
+    let theActualUrl = Router.route(routeName, {id: testId});
+    expect(theActualUrl).toBe(theExpectedUrl);
+
+    theActualUrl = Router.getRoute(testRoot, routeName, {id: testId});
+    expect(theActualUrl).toBe(theExpectedUrl);
+  });
+
+  it('tests function plainRoute', () => {
+    let theExpectedUrl = `${testRoute}`
+    let theActualUrl = Router.plainRoute(routeName, {id: testId});
+
+    expect(theActualUrl).toBe(theExpectedUrl);
+  });
+
 });
 
 test('checkStatus throws Error on status not in the range [200, 300)', () => {
@@ -45,15 +61,15 @@ test('checkStatus throws Error on status not in the range [200, 300)', () => {
     status: 300
   }];
 
-  responses.map(response => {
+  responses.map(theTestResponse => {
     let test = () => {
-      checkStatus(response)
+      checkStatus(theTestResponse)
     };
     expect(test).toThrow(Error);
     try {
-      checkStatus(response);
-    } catch (error) {
-      expect(error.response).toBe(response);
+      checkStatus(theTestResponse);
+    } catch (theError) {
+      expect(theError.response).toBe(theTestResponse);
     }
   });
 });

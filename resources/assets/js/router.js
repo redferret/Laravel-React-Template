@@ -19,12 +19,20 @@ class WebRouter {
     this._root = root;
   }
 
+  plainRoute(name, args) {
+    return this.getRoute('', name, args);
+  }
+
   route(name, args) {
+    return this.getRoute(this._root, name, args);
+  }
+
+  getRoute(root, name, args) {
     let route = this._routes.get(name);
     if (route instanceof Function) {
-      return `${this._root}${route(args)}`;
+      return `${root}${route(args)}`;
     }
-    throw new Error(`The route ${name} was not registered or is not a function`);
+    console.error(`The route ${name} was not registered or is not a function`);
   }
 
   relocateTo(url) {
