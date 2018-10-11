@@ -1,5 +1,5 @@
 import Actions from './AppActions.js';
-import Axios from 'axios';a
+import Axios from 'axios';
 import ExampleStore from '../stores/ExampleStore.js';
 import Router, { checkStatus, handleError } from '../router.js';
 
