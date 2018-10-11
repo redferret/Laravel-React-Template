@@ -1,36 +1,44 @@
 
 import $ from 'jquery';
 
-class WebRouter {
+let axiosDefaults = require('axios/lib/defaults');
+
+export function getCSRF() {
+  try {
+    return window.axios.defaults.headers.common['X-CSRF-TOKEN']
+  } catch (error) {
+    return 'Not Defined';
+  }
+}
+
+const HEADERS = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-CSRF-TOKEN': getCSRF()
+};
+
+class Router {
   constructor() {
     this._routes = new Map();
-    this._methods = new Map();
+    try {
+      axiosDefaults.baseURL = $('meta[name="baseURL"]').attr('content');
+    } catch(error) {
+      // Do nothing... who cares
+    }
   }
 
   registerRoute(name, route) {
     this._routes.set(name, route);
   }
 
-  registerMethod(name, method) {
-    this._methods.set(name, method);
-  }
-
-  root(root) {
-    this._root = root;
-  }
-
-  plainRoute(name, args) {
-    return this.getRoute('', name, args);
-  }
-
   route(name, args) {
-    return this.getRoute(this._root, name, args);
+    return `${axiosDefaults.baseURL}${this.getRoute(name, args)}`;
   }
 
-  getRoute(root, name, args) {
+  getRoute(name, args) {
     let route = this._routes.get(name);
     if (route instanceof Function) {
-      return `${root}${route(args)}`;
+      return route(args);
     }
     console.error(`The route ${name} was not registered or is not a function`);
   }
@@ -43,12 +51,16 @@ class WebRouter {
     window.location.href = url;
   }
 
-  method(name, data) {
-    let method = this._methods.get(name);
-    if (method instanceof Function) {
-      return method(data);
+  request(type, routeName, requestData) {
+    if (typeof requestData == 'undefined' || requestData == null) {
+      requestData = {};
     }
-    throw new Error(`The method ${name} was not registered or is not a function`);
+    return {
+      method: type,
+      url: this.getRoute(routeName, requestData.args),
+      headers: HEADERS,
+      data: requestData.data
+    }
   }
 }
 
@@ -70,58 +82,4 @@ export function parseJSON(response) {
   return response.json();
 }
 
-function getCSRF() {
-  try {
-    return window.axios.defaults.headers.common['X-CSRF-TOKEN']
-  } catch (error) {
-    console.error("Couldn't get X-CSRF-TOKEN");
-    return 'Not Defined';
-  }
-}
-
-let Router = new WebRouter();
-
-const HEADERS = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json',
-  'X-CSRF-TOKEN': getCSRF()
-};
-
-Router.registerMethod('DELETE', data => {
-  return {
-    method: 'DELETE',
-    headers: HEADERS,
-    body: JSON.stringify(data)
-  }
-});
-
-Router.registerMethod('PUT', data => {
-  return {
-    method: 'PUT',
-    headers: HEADERS,
-    body: JSON.stringify(data)
-  }
-});
-
-Router.registerMethod('POST', data => {
-  return {
-    method: 'POST',
-    headers: HEADERS,
-    body: JSON.stringify(data)
-  };
-});
-
-Router.registerMethod('GET', data => {
-  return {
-    method: 'GET',
-    headers: HEADERS,
-    body: JSON.stringify(data)
-  };
-});
-
-/**
- * Root route for the application
- */
-Router.root($('meta[name="rootURL"]').attr('content'));
-
-export default Router;
+export default new Router();

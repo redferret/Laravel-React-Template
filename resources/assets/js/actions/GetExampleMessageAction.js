@@ -1,17 +1,17 @@
 import Actions from './AppActions.js';
+import Axios from 'axios';a
 import ExampleStore from '../stores/ExampleStore.js';
-import Router, { checkStatus, parseJSON } from '../router.js';
+import Router, { checkStatus, handleError } from '../router.js';
 
 import { GET_EXAMPLE_MESSAGE } from '../constants.js';
 
 Actions.register(GET_EXAMPLE_MESSAGE, payload => {
-  fetch(Router.route(GET_EXAMPLE_MESSAGE, {id: payload.id}), Router.method('GET'))
+  Axios(Router.request('GET', GET_EXAMPLE_MESSAGE, {
+    args: {id: payload.id}
+  }))
   .then(checkStatus)
-  .then(parseJSON)
-  .then(data => {
-    ExampleStore.setExampleMessage(data.message);
+  .then(response => {
+    ExampleStore.setExampleMessage(response.data.message);
     Actions.finish(payload);
-  }).catch((error) => {
-    console.error('Request Failed', error);
-  });
+  }).catch(handleError);
 });

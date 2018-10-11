@@ -1,11 +1,14 @@
 import Actions from '../AppActions.js';
 import AuthStore from '../../stores/AuthStore.js';
-import Router, { checkStatus, parseJSON } from '../../router.js';
+import Axios from 'axios';
+import Router, { checkStatus } from '../../router.js';
 
 import { SEND_PASSWORD_RESET } from '../../constants.js';
 
 Actions.register(SEND_PASSWORD_RESET, payload => {
-  fetch(Router.route(SEND_PASSWORD_RESET), Router.method('POST', payload.values))
+  Axios(Router.request('POST', SEND_PASSWORD_RESET, {
+    data: payload.values
+  }))
   .then(checkStatus)
   .then(response => {
     AuthStore.setMessage('If an account matching the given email is found you will receive an email shortly');
@@ -15,13 +18,11 @@ Actions.register(SEND_PASSWORD_RESET, payload => {
     try {
       if (error.response) {
         AuthStore.setStatus(error.response.status);
-        parseJSON(error.response).then(responseJson => {
-          AuthStore.setMessage(responseJson.message);
-          if (responseJson.errors) {
-            AuthStore.setErrors(responseJson.errors.errors);
-          }
-          Actions.finish(payload);
-        });
+        AuthStore.setMessage(error.response.data.message);
+        if (error.response.data.errors) {
+          AuthStore.setErrors(error.response.data.errors);
+        }
+        Actions.finish(payload);
       } else {
         console.error('Critical Error Occured', exception);
       }

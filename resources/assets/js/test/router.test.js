@@ -1,23 +1,6 @@
 
 import Router, { checkStatus, handleError } from '../router.js';
-
-test('Root is set', () => {
-  let TestRoot = '/root/test';
-  Router.root(TestRoot);
-  expect(Router._root).toBe(TestRoot);
-});
-
-test('Basic CRUD methods exist', () => {
-  let methods = ['POST', 'PUT', 'GET', 'DELETE'];
-  let data = {id: 10, name: 'test'};
-  let testData = JSON.stringify(data);
-
-  methods.map(method => {
-    let m = Router.method(method, data);
-    expect(m.method).toBe(method);
-    expect(m.body).toBe(testData);
-  })
-});
+let axiosDefaults = require('axios/lib/defaults');
 
 describe('Route is set and returns the expected URL', () => {
 
@@ -27,27 +10,41 @@ describe('Route is set and returns the expected URL', () => {
   let testRoute = `/pass/${testId}`;
 
   beforeEach(() => {
-    Router.root(testRoot);
+    axiosDefaults.baseURL = testRoot;
     Router.registerRoute(routeName, args => {
       return `/pass/${args.id}`;
     });
   });
 
-  it('tests function route and getRoute', () => {
+  it('tests the route and getRoute functions', () => {
     let theExpectedUrl = `${testRoot}${testRoute}`
-
     let theActualUrl = Router.route(routeName, {id: testId});
-    expect(theActualUrl).toBe(theExpectedUrl);
-
-    theActualUrl = Router.getRoute(testRoot, routeName, {id: testId});
     expect(theActualUrl).toBe(theExpectedUrl);
   });
 
-  it('tests function plainRoute', () => {
-    let theExpectedUrl = `${testRoute}`
-    let theActualUrl = Router.plainRoute(routeName, {id: testId});
-
+  it('tests the getRoute function', () => {
+    let theActualUrl = Router.getRoute(routeName, {id: testId});
+    let theExpectedUrl = testRoute;
     expect(theActualUrl).toBe(theExpectedUrl);
+  })
+
+  it('tests the request function', () => {
+    let theExpectedRequest = {
+      method: 'post',
+      url: testRoute,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': 'Not Defined'
+      }
+    };
+
+    let theRequest = Router.request('post', routeName, {
+      args: {
+        id: testId
+      }
+    });
+    expect(theRequest).toEqual(theExpectedRequest);
   });
 
 });
