@@ -77138,17 +77138,13 @@ var RequestResetLink = function (_React$Component) {
         _reactBootstrap.Form,
         { horizontal: true },
         _react2.default.createElement(
-          _reactBootstrap.FormGroup,
-          null,
-          _react2.default.createElement(
-            _reactBootstrap.Col,
-            { smOffset: 4, sm: 4 },
-            status ? _react2.default.createElement(
-              _reactBootstrap.Alert,
-              { bsStyle: status == 200 ? 'success' : 'danger' },
-              message
-            ) : null
-          )
+          _reactBootstrap.Col,
+          { smOffset: 3, sm: 6 },
+          status ? _react2.default.createElement(
+            _reactBootstrap.Alert,
+            { bsStyle: status == 200 ? 'success' : 'danger' },
+            message
+          ) : null
         ),
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com',
           label: 'Enter Your Email Address',

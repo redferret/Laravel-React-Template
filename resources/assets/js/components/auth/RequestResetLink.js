@@ -33,7 +33,7 @@ export default class RequestResetLink extends React.Component {
   _onChange() {
     let newValues = this.state.values;
     newValues['email'] = '';
-    
+
     this.setState({
       errors: AuthStore.getErrors(),
       status: AuthStore.getStatus(),
@@ -84,11 +84,9 @@ export default class RequestResetLink extends React.Component {
     let validation = emailError? 'error' : (status? (status == 200 ? 'success' : 'error') : null);
     return (
       <Form horizontal>
-        <FormGroup>
-          <Col smOffset={4} sm={4}>
-            {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
-          </Col>
-        </FormGroup>
+        <Col smOffset={3} sm={6}>
+          {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
+        </Col>
         <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com'
           label='Enter Your Email Address'
           initialValue={this.state.values.email}
