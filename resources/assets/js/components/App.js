@@ -1,7 +1,6 @@
-import React from 'react';
-
 import AppDispatcher from '../dispatcher.js';
 import ExampleStore from '../stores/ExampleStore.js';
+import React from 'react';
 
 import { Label } from 'react-bootstrap';
 
@@ -16,14 +15,16 @@ export default class App extends React.Component {
     super(props, context);
 
     this.state = {
-      exampleMessage: ExampleStore.getExampleMessage()
+      exampleMessage: ExampleStore.getExampleMessage(),
+      status: ExampleStore.getStatus()
     }
   }
 
   _onChange() {
     this.setState({
-      exampleMessage: ExampleStore.getExampleMessage()
-    })
+      exampleMessage: ExampleStore.getExampleMessage(),
+      status: ExampleStore.getStatus()
+    });
   }
 
   componentDidMount() {
@@ -36,7 +37,7 @@ export default class App extends React.Component {
         store: ExampleStore,
         componentIds: [MAIN_ID]
       }]
-    })
+    });
   }
 
   componentWillUnmount() {
@@ -47,11 +48,11 @@ export default class App extends React.Component {
     return (
       <div>
         <div>
-            Your Laravel/React App!! This example will show a message...
+          Your Laravel/React App!! This example will show a message...
         </div>
         <h3>
-          <Label bsStyle='success'>
-              {this.state.exampleMessage}
+          <Label bsStyle={this.state.status}>
+            {this.state.exampleMessage}
           </Label>
         </h3>
       </div>

@@ -1,9 +1,14 @@
 import AppDispatcher from '../../dispatcher.js';
-import Input from '../Input.js';
 import AuthStore from '../../stores/AuthStore.js';
+import Input from '../Input.js';
 import React from 'react';
 import Router from '../../router.js';
-import { LOG_IN, SHOW_PASSWORD_RESET } from '../../constants.js';
+
+import {
+  LOG_IN,
+  LOG_IN_FORM,
+  SHOW_PASSWORD_RESET
+} from '../../constants.js';
 
 import {
   Button,
@@ -37,11 +42,11 @@ export default class LoginForm extends React.Component {
   }
 
   componentDidMount() {
-    AuthStore.on('login-form', this._onChange.bind(this));
+    AuthStore.on(LOG_IN_FORM, this._onChange.bind(this));
   }
 
   componentWillUnmount() {
-    AuthStore.removeListener('login-form', this._onChange.bind(this));
+    AuthStore.removeListener(LOG_IN_FORM, this._onChange.bind(this));
   }
 
   handleInputChanged(event) {
@@ -63,7 +68,7 @@ export default class LoginForm extends React.Component {
       values: this.state.values,
       emitOn: [{
         store: AuthStore,
-        componentIds: ['login-form']
+        componentIds: [LOG_IN_FORM]
       }]
     });
   }

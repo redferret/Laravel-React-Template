@@ -1,9 +1,13 @@
 import AppDispatcher from '../../dispatcher.js';
-import Input from '../Input.js';
 import AuthStore from '../../stores/AuthStore.js';
+import Input from '../Input.js';
 import React from 'react';
 import Router from '../../router.js';
-import { REGISTER } from '../../constants.js';
+
+import {
+  REGISTER,
+  REGISTER_FORM
+} from '../../constants.js';
 
 import {
   Button,
@@ -37,11 +41,11 @@ export default class RegisterForm extends React.Component {
   }
 
   componentDidMount() {
-    AuthStore.on('register-form', this._onChange.bind(this));
+    AuthStore.on(REGISTER_FORM, this._onChange.bind(this));
   }
 
   componentWillUnmount() {
-    AuthStore.removeListener('register-form', this._onChange.bind(this));
+    AuthStore.removeListener(REGISTER_FORM, this._onChange.bind(this));
   }
 
   handleInputChanged(event) {
@@ -58,7 +62,7 @@ export default class RegisterForm extends React.Component {
       values: this.state.values,
       emitOn: [{
         store: AuthStore,
-        componentIds: ['register-form']
+        componentIds: [REGISTER_FORM]
       }]
     });
   }

@@ -3,7 +3,11 @@ import AuthStore from '../../stores/AuthStore.js';
 import Input from '../Input.js';
 import React from 'react';
 import Router from '../../router.js';
-import { SEND_PASSWORD_RESET } from '../../constants.js';
+
+import {
+  SEND_PASSWORD_RESET,
+  SEND_PASSWORD_RESET_FORM
+} from '../../constants.js';
 
 import {
   Alert,
@@ -44,11 +48,11 @@ export default class RequestResetLink extends React.Component {
   }
 
   componentDidMount() {
-    AuthStore.on('send-reset-form', this._onChange.bind(this));
+    AuthStore.on(SEND_PASSWORD_RESET_FORM, this._onChange.bind(this));
   }
 
   componentWillUnmount() {
-    AuthStore.removeListener('send-reset-form', this._onChange.bind(this));
+    AuthStore.removeListener(SEND_PASSWORD_RESET_FORM, this._onChange.bind(this));
   }
 
   handleInputChanged(event) {
@@ -70,7 +74,7 @@ export default class RequestResetLink extends React.Component {
       values: this.state.values,
       emitOn: [{
         store: AuthStore,
-        componentIds: ['send-reset-form']
+        componentIds: [SEND_PASSWORD_RESET_FORM]
       }]
     });
   }
