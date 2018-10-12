@@ -1283,11 +1283,11 @@ var Router = function () {
   }, {
     key: 'route',
     value: function route(name, args) {
-      return '' + axiosDefaults.baseURL + this.getRoute(name, args);
+      return '' + axiosDefaults.baseURL + this.partialRoute(name, args);
     }
   }, {
-    key: 'getRoute',
-    value: function getRoute(name, args) {
+    key: 'partialRoute',
+    value: function partialRoute(name, args) {
       var route = this._routes.get(name);
       if (route instanceof Function) {
         return route(args);
@@ -1312,7 +1312,7 @@ var Router = function () {
       }
       return {
         method: type,
-        url: this.getRoute(routeName, requestData.args),
+        url: this.partialRoute(routeName, requestData.args),
         headers: HEADERS,
         data: requestData.data
       };
@@ -15876,10 +15876,10 @@ var RenderManager = function () {
   }, {
     key: 'renderElements',
     value: function renderElements() {
-      this._elements.forEach(function (value, key) {
+      this._elements.forEach(function (component, key) {
         var element = document.getElementById(key);
         if (element) {
-          _reactDom2.default.render(value, element);
+          _reactDom2.default.render(component, element);
         }
       });
     }
@@ -76610,35 +76610,27 @@ var AppNavbar = function (_React$Component) {
     value: function renderCheckForGuest() {
       if (this.props.guest) {
         return _react2.default.createElement(
-          _reactBootstrap.Navbar.Collapse,
-          null,
+          _reactBootstrap.Nav,
+          { pullRight: true },
           _react2.default.createElement(
-            _reactBootstrap.Nav,
-            { pullRight: true },
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 1, href: _router2.default.route(_constants.LOG_IN) },
-              'Login'
-            ),
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 2, href: _router2.default.route(_constants.REGISTER) },
-              'Register'
-            )
+            _reactBootstrap.NavItem,
+            { eventKey: 1, href: _router2.default.route(_constants.LOG_IN) },
+            'Login'
+          ),
+          _react2.default.createElement(
+            _reactBootstrap.NavItem,
+            { eventKey: 2, href: _router2.default.route(_constants.REGISTER) },
+            'Register'
           )
         );
       } else {
         return _react2.default.createElement(
-          _reactBootstrap.Navbar.Collapse,
-          null,
+          _reactBootstrap.Nav,
+          { pullRight: true },
           _react2.default.createElement(
-            _reactBootstrap.Nav,
-            { pullRight: true },
-            _react2.default.createElement(
-              _reactBootstrap.NavItem,
-              { eventKey: 1, href: '#', onClick: this.postLogout },
-              'Logout'
-            )
+            _reactBootstrap.NavItem,
+            { eventKey: 1, href: '#', onClick: this.postLogout },
+            'Logout'
           )
         );
       }
@@ -76648,7 +76640,7 @@ var AppNavbar = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         _reactBootstrap.Navbar,
-        { inverse: true, collapseOnSelect: true },
+        { inverse: true },
         _react2.default.createElement(
           _reactBootstrap.Navbar.Header,
           null,
@@ -76660,8 +76652,7 @@ var AppNavbar = function (_React$Component) {
               null,
               'Laravel-React-Template'
             )
-          ),
-          _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
+          )
         ),
         this.renderCheckForGuest()
       );

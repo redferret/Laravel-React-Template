@@ -28,38 +28,33 @@ export default class AppNavbar extends React.Component {
   renderCheckForGuest() {
     if (this.props.guest) {
       return (
-        <Navbar.Collapse>
-          <Nav pullRight>
-            <NavItem eventKey={1} href={Router.route(LOG_IN)}>
-              Login
-            </NavItem>
-            <NavItem eventKey={2} href={Router.route(REGISTER)}>
-              Register
-            </NavItem>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav pullRight>
+          <NavItem eventKey={1} href={Router.route(LOG_IN)}>
+            Login
+          </NavItem>
+          <NavItem eventKey={2} href={Router.route(REGISTER)}>
+            Register
+          </NavItem>
+        </Nav>
       );
     } else {
       return (
-        <Navbar.Collapse>
-          <Nav pullRight>
-            <NavItem eventKey={1} href='#' onClick={this.postLogout}>
-              Logout
-            </NavItem>
-          </Nav>
-        </Navbar.Collapse>
+        <Nav pullRight>
+          <NavItem eventKey={1} href='#' onClick={this.postLogout}>
+            Logout
+          </NavItem>
+        </Nav>
       );
     }
   }
 
   render() {
     return (
-      <Navbar inverse collapseOnSelect>
+      <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
             <span>Laravel-React-Template</span>
           </Navbar.Brand>
-          <Navbar.Toggle />
         </Navbar.Header>
         {this.renderCheckForGuest()}
       </Navbar>
