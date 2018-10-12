@@ -1,6 +1,6 @@
 import AppDispatcher from '../../dispatcher.js';
-import Input from '../Input.js';
 import AuthStore from '../../stores/AuthStore.js';
+import Input from '../Input.js';
 import React from 'react';
 import Router from '../../router.js';
 import { SEND_PASSWORD_RESET } from '../../constants.js';
@@ -76,7 +76,6 @@ export default class RequestResetLink extends React.Component {
   }
 
   render() {
-
     let errors = this.state.errors;
     let emailError = errors? errors.email : null;
     let status = this.state.status;
