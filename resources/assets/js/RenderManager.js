@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -12,10 +11,10 @@ class RenderManager {
   }
 
   renderElements() {
-    this._elements.forEach((value, key) => {
+    this._elements.forEach((component, key) => {
       let element = document.getElementById(key);
       if (element) {
-        ReactDOM.render(value, element);
+        ReactDOM.render(component, element);
       }
     });
   }

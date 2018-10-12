@@ -32,10 +32,10 @@ class Router {
   }
 
   route(name, args) {
-    return `${axiosDefaults.baseURL}${this.getRoute(name, args)}`;
+    return `${axiosDefaults.baseURL}${this.partialRoute(name, args)}`;
   }
 
-  getRoute(name, args) {
+  partialRoute(name, args) {
     let route = this._routes.get(name);
     if (route instanceof Function) {
       return route(args);
@@ -57,7 +57,7 @@ class Router {
     }
     return {
       method: type,
-      url: this.getRoute(routeName, requestData.args),
+      url: this.partialRoute(routeName, requestData.args),
       headers: HEADERS,
       data: requestData.data
     }

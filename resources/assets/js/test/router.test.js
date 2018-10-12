@@ -16,14 +16,19 @@ describe('Route is set and returns the expected URL', () => {
     });
   });
 
-  it('tests the route and getRoute functions', () => {
+  it('tests the route functions', () => {
+    let partialRouteMock = jest.spyOn(Router, 'partialRoute');
+    partialRouteMock.mockClear();
+
     let theExpectedUrl = `${testRoot}${testRoute}`
     let theActualUrl = Router.route(routeName, {id: testId});
+
+    expect(partialRouteMock).toHaveBeenCalledTimes(1);
     expect(theActualUrl).toBe(theExpectedUrl);
   });
 
-  it('tests the getRoute function', () => {
-    let theActualUrl = Router.getRoute(routeName, {id: testId});
+  it('tests the partialRoute function', () => {
+    let theActualUrl = Router.partialRoute(routeName, {id: testId});
     let theExpectedUrl = testRoute;
     expect(theActualUrl).toBe(theExpectedUrl);
   })
