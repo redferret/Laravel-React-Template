@@ -9,6 +9,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @if($token)
+      <meta name="email_token" content="{{ $token }}">
+    @endif
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->

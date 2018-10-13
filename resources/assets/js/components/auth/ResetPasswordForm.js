@@ -65,13 +65,17 @@ export default class ResetPasswordForm extends React.Component {
   }
 
   sendResetPassword() {
-    AppDispatcher.dispatch({
-      action: RESET_PASSWORD_REQUEST,
-      values: this.state,
-      emitOn: [{
-        store: AuthStore,
-        componentIds: [RESET_PASSWORD_FORM]
-      }]
+    this.setState({
+      token: $('meta[name="email_token"]').attr('content')
+    }, () => {
+      AppDispatcher.dispatch({
+        action: RESET_PASSWORD_REQUEST,
+        values: this.state,
+        emitOn: [{
+          store: AuthStore,
+          componentIds: [RESET_PASSWORD_FORM]
+        }]
+      });
     });
   }
 

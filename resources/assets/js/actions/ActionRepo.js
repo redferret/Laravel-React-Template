@@ -5,4 +5,3 @@ require('./auth/Logout.js');
 require('./auth/Register.js');
 require('./auth/ResetPassword.js');
 require('./auth/SendEmailResetLink.js');
-require('./auth/ShowResetPassword.js');
