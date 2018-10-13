@@ -14,6 +14,7 @@ Actions.register(RESET_PASSWORD_REQUEST, payload => {
     Router.relocateTo(response.request.responseURL);
   }).catch(error => {
     AuthStore.setErrors(error.response.data.errors);
+    AuthStore.setMessage(error.response.data.message);
     Actions.finish(payload);
   });
 });

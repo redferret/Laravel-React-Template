@@ -9,26 +9,28 @@ import {
   RESET_PASSWORD_FORM
 } from '../../constants.js';
 
+import {
+  Button,
+  Col,
+  Form,
+  FormControl,
+  FormGroup,
+} from 'react-bootstrap';
+
 export default class ResetPasswordForm extends React.Component {
 
   constructor(props, context) {
     super(props, context);
     this.sendResetPassword = this.sendResetPassword.bind(this);
     this.handleInputChanged = this.handleInputChanged.bind(this);
-
-    this.state = {
-    }
   }
 
   _onChange() {
-    let newValues = this.state.values;
-    newValues['email'] = '';
-
     this.setState({
       errors: AuthStore.getErrors(),
       status: AuthStore.getStatus(),
       message: AuthStore.getMessage(),
-      values: newValues
+      email: ''
     });
     AuthStore.reset();
   }
@@ -42,17 +44,15 @@ export default class ResetPasswordForm extends React.Component {
   }
 
   handleInputChanged(event) {
-    let values = this.state.values;
-    values[event.target.name] = event.target.value;
     this.setState({
-      values: values
+      [event.target.name]: event.target.value
     });
   }
 
   sendResetPassword() {
     AppDispatcher.dispatch({
       action: RESET_PASSWORD_REQUEST,
-      values: this.state.values,
+      values: this.state,
       emitOn: [{
         store: AuthStore,
         componentIds: [RESET_PASSWORD_FORM]
@@ -61,8 +61,46 @@ export default class ResetPasswordForm extends React.Component {
   }
 
   render() {
+    let errors = this.state.errors;
+    let emailError = errors? errors.email : null;
+    let passwordError = errors? errors.password : null;
+    let status = this.state.status;
+    let message = this.state.message;
+
     return (
-      null
+      <Form>
+        <FormGroup>
+          <Col smOffset={4} sm={4}>
+            {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
+          </Col>
+        </FormGroup>
+        <Input smOffset={4} sm={4} name='email' type='email'
+          placeholder='Example@gmail.com'
+          label='Email'
+          initialValue={this.state.values.email}
+          validationCallback={() => emailError? 'error' : null}
+          help={emailError? emailError : ''}
+          callback={this.handleInputChanged}
+          autoComplete='on'/>
+
+        <Input smOffset={4} sm={4} name='password' type='password'
+          label='Password'
+          initialValue={this.state.values.password}
+          validationCallback={() => passwordError? 'error' : null}
+          help={passwordError? passwordError : ''}
+          callback={this.handleInputChanged}/>
+
+        <Input smOffset={4} sm={4} name='password_confirmation' type='password'
+          label='Confirm Password'
+          initialValue={this.state.values.password_confirmation}
+          callback={this.handleInputChanged}/>
+
+        <FormGroup>
+          <Col smOffset={4} sm={10}>
+            <Button onClick={this.postRegister}>Reset Password</Button>
+          </Col>
+        </FormGroup>
+      </Form>
     );
   }
 }

@@ -25,12 +25,10 @@ export default class RegisterForm extends React.Component {
     this.handleInputChanged = this.handleInputChanged.bind(this);
 
     this.state = {
-      values: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-      }
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
     }
   }
 
@@ -49,17 +47,15 @@ export default class RegisterForm extends React.Component {
   }
 
   handleInputChanged(event) {
-    let values = this.state.values;
-    values[event.target.name] = event.target.value;
     this.setState({
-      values: values
+      [event.target.name]: event.target.value
     })
   }
 
   postRegister() {
     AppDispatcher.dispatch({
       action: REGISTER,
-      values: this.state.values,
+      values: this.state,
       emitOn: [{
         store: AuthStore,
         componentIds: [REGISTER_FORM]
@@ -73,25 +69,34 @@ export default class RegisterForm extends React.Component {
     let passwordError = errors? errors.password : null;
     return (
       <Form horizontal>
-        <Input smOffset={4} sm={4} name='name' type='text' placeholder='John Doe' label='Name'
-          initialValue={this.state.values.name} autoComplete='on'
-          callback={(event) => this.handleInputChanged(event)}/>
+        <Input smOffset={4} sm={4} name='name' type='text'
+          placeholder='John Doe'
+          label='Name'
+          initialValue={this.state.values.name}
+          autoComplete='on'
+          callback={this.handleInputChanged}/>
 
-        <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com' label='Email'
+        <Input smOffset={4} sm={4} name='email' type='email'
+          placeholder='Example@gmail.com'
+          label='Email'
           initialValue={this.state.values.email}
           validationCallback={() => emailError? 'error' : null}
           help={emailError? emailError : ''}
-          callback={(event) => this.handleInputChanged(event)} autoComplete='on'/>
+          callback={this.handleInputChanged}
+          autoComplete='on'/>
 
-        <Input smOffset={4} sm={4} name='password' type='password' label='Password'
+        <Input smOffset={4} sm={4} name='password' type='password'
+          label='Password'
           initialValue={this.state.values.password}
           validationCallback={() => passwordError? 'error' : null}
           help={passwordError? passwordError : ''}
-          callback={(event) => this.handleInputChanged(event)}/>
+          callback={this.handleInputChanged}/>
 
-        <Input smOffset={4} sm={4} name='password_confirmation' type='password' label='Confirm Password'
+        <Input smOffset={4} sm={4} name='password_confirmation'
+          type='password'
+          label='Confirm Password'
           initialValue={this.state.values.password_confirmation}
-          callback={(event) => this.handleInputChanged(event)}/>
+          callback={this.handleInputChanged}/>
 
         <FormGroup>
           <Col smOffset={4} sm={10}>

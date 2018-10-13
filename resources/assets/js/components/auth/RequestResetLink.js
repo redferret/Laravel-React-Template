@@ -26,40 +26,33 @@ export default class RequestResetLink extends React.Component {
     this.handleInputChanged = this.handleInputChanged.bind(this);
 
     this.state = {
-      values: {
-        email: '',
-        password: '',
-        remember: 0
-      }
+      email: '',
+      password: '',
+      remember: 0
     }
   }
 
   _onChange() {
-    let newValues = this.state.values;
-    newValues['email'] = '';
-
     this.setState({
       errors: AuthStore.getErrors(),
       status: AuthStore.getStatus(),
       message: AuthStore.getMessage(),
-      values: newValues
+      email: ''
     });
     AuthStore.reset();
   }
 
   componentDidMount() {
-    AuthStore.on(SEND_PASSWORD_RESET_FORM, this._onChange.bind(this));
+    AuthStore.on('send-reset-form', this._onChange.bind(this));
   }
 
   componentWillUnmount() {
-    AuthStore.removeListener(SEND_PASSWORD_RESET_FORM, this._onChange.bind(this));
+    AuthStore.removeListener('send-reset-form', this._onChange.bind(this));
   }
 
   handleInputChanged(event) {
-    let values = this.state.values;
-    values[event.target.name] = event.target.value;
     this.setState({
-      values: values
+      [event.target.name]: event.target.value
     });
     if (event.target.name == 'email') {
       if (event.key == 'Enter') {
@@ -71,31 +64,37 @@ export default class RequestResetLink extends React.Component {
   sendResetLink() {
     AppDispatcher.dispatch({
       action: SEND_PASSWORD_RESET,
-      values: this.state.values,
+      values: this.state,
       emitOn: [{
         store: AuthStore,
-        componentIds: [SEND_PASSWORD_RESET_FORM]
+        componentIds: ['send-reset-form']
       }]
     });
   }
 
   render() {
+
     let errors = this.state.errors;
     let emailError = errors? errors.email : null;
     let status = this.state.status;
     let message = this.state.message;
     let validation = emailError? 'error' : (status? (status == 200 ? 'success' : 'error') : null);
+
     return (
       <Form horizontal>
-        <Col smOffset={3} sm={6}>
-          {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
-        </Col>
-        <Input smOffset={4} sm={4} name='email' type='email' placeholder='Example@gmail.com'
+        <FormGroup>
+          <Col smOffset={4} sm={4}>
+            {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
+          </Col>
+        </FormGroup>
+        <Input smOffset={4} sm={4} name='email' type='email'
+          placeholder='Example@gmail.com'
           label='Enter Your Email Address'
           initialValue={this.state.values.email}
           validationCallback={() => validation}
           help={emailError? emailError : ''}
-          callback={(event) => this.handleInputChanged(event)} autoComplete='on'/>
+          callback={this.handleInputChanged}
+          autoComplete='on'/>
 
         <FormGroup>
           <Col smOffset={4} sm={10}>
