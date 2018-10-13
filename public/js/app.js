@@ -1574,7 +1574,7 @@ exports.default = new AuthStore();
 
 var store = __webpack_require__(72)('wks');
 var uid = __webpack_require__(48);
-var Symbol = __webpack_require__(25).Symbol;
+var Symbol = __webpack_require__(26).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
 var $exports = module.exports = function (name) {
@@ -1643,11 +1643,11 @@ exports.default = new Actions();
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 var core = __webpack_require__(17);
 var ctx = __webpack_require__(103);
 var hide = __webpack_require__(39);
-var has = __webpack_require__(27);
+var has = __webpack_require__(28);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -1728,245 +1728,6 @@ module.exports = __webpack_require__(165);
 
 /***/ }),
 /* 25 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(40);
-var IE8_DOM_DEFINE = __webpack_require__(104);
-var toPrimitive = __webpack_require__(67);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(31) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.default = uncontrollable;
-
-var _react = _interopRequireDefault(__webpack_require__(0));
-
-var _invariant = _interopRequireDefault(__webpack_require__(50));
-
-var Utils = _interopRequireWildcard(__webpack_require__(223));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-function uncontrollable(Component, controlledValues, methods) {
-  if (methods === void 0) {
-    methods = [];
-  }
-
-  var displayName = Component.displayName || Component.name || 'Component';
-  var isCompositeComponent = Utils.isReactComponent(Component);
-  var controlledProps = Object.keys(controlledValues);
-  var PROPS_TO_OMIT = controlledProps.map(Utils.defaultKey);
-  !(isCompositeComponent || !methods.length) ?  true ? (0, _invariant.default)(false, '[uncontrollable] stateless function components cannot pass through methods ' + 'because they have no associated instances. Check component: ' + displayName + ', ' + 'attempting to pass through methods: ' + methods.join(', ')) : invariant(false) : void 0;
-
-  var UncontrolledComponent =
-  /*#__PURE__*/
-  function (_React$Component) {
-    _inheritsLoose(UncontrolledComponent, _React$Component);
-
-    function UncontrolledComponent() {
-      var _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
-      _this.handlers = Object.create(null);
-      controlledProps.forEach(function (propName) {
-        var handlerName = controlledValues[propName];
-
-        var handleChange = function handleChange(value) {
-          if (_this.props[handlerName]) {
-            var _this$props;
-
-            _this._notifying = true;
-
-            for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-              args[_key2 - 1] = arguments[_key2];
-            }
-
-            (_this$props = _this.props)[handlerName].apply(_this$props, [value].concat(args));
-
-            _this._notifying = false;
-          }
-
-          _this._values[propName] = value;
-          if (!_this.unmounted) _this.forceUpdate();
-        };
-
-        _this.handlers[handlerName] = handleChange;
-      });
-      if (isCompositeComponent) _this.attachRef = function (ref) {
-        _this.inner = ref;
-      };
-      return _this;
-    }
-
-    var _proto = UncontrolledComponent.prototype;
-
-    _proto.shouldComponentUpdate = function shouldComponentUpdate() {
-      //let the forceUpdate trigger the update
-      return !this._notifying;
-    };
-
-    _proto.componentWillMount = function componentWillMount() {
-      var _this2 = this;
-
-      var props = this.props;
-      this._values = Object.create(null);
-      controlledProps.forEach(function (key) {
-        _this2._values[key] = props[Utils.defaultKey(key)];
-      });
-    };
-
-    _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      var _this3 = this;
-
-      var props = this.props;
-      controlledProps.forEach(function (key) {
-        /**
-         * If a prop switches from controlled to Uncontrolled
-         * reset its value to the defaultValue
-         */
-        if (!Utils.isProp(nextProps, key) && Utils.isProp(props, key)) {
-          _this3._values[key] = nextProps[Utils.defaultKey(key)];
-        }
-      });
-    };
-
-    _proto.componentWillUnmount = function componentWillUnmount() {
-      this.unmounted = true;
-    };
-
-    _proto.getControlledInstance = function getControlledInstance() {
-      return this.inner;
-    };
-
-    _proto.render = function render() {
-      var _this4 = this;
-
-      var props = _extends({}, this.props);
-
-      PROPS_TO_OMIT.forEach(function (prop) {
-        delete props[prop];
-      });
-      var newProps = {};
-      controlledProps.forEach(function (propName) {
-        var propValue = _this4.props[propName];
-        newProps[propName] = propValue !== undefined ? propValue : _this4._values[propName];
-      });
-      return _react.default.createElement(Component, _extends({}, props, newProps, this.handlers, {
-        ref: this.attachRef
-      }));
-    };
-
-    return UncontrolledComponent;
-  }(_react.default.Component);
-
-  UncontrolledComponent.displayName = "Uncontrolled(" + displayName + ")";
-  UncontrolledComponent.propTypes = Utils.uncontrolledPropTypes(controlledValues, displayName);
-  methods.forEach(function (method) {
-    UncontrolledComponent.prototype[method] = function $proxiedMethod() {
-      var _inner;
-
-      return (_inner = this.inner)[method].apply(_inner, arguments);
-    };
-  });
-  UncontrolledComponent.ControlledComponent = Component;
-  /**
-   * useful when wrapping a Component and you want to control
-   * everything
-   */
-
-  UncontrolledComponent.deferControlTo = function (newComponent, additions, nextMethods) {
-    if (additions === void 0) {
-      additions = {};
-    }
-
-    return uncontrollable(newComponent, _extends({}, controlledValues, additions), nextMethods);
-  };
-
-  return UncontrolledComponent;
-}
-
-module.exports = exports["default"];
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _AppActions = __webpack_require__(21);
-
-var _AppActions2 = _interopRequireDefault(_AppActions);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Dispatcher = __webpack_require__(195).Dispatcher;
-var AppDispatcher = new Dispatcher();
-
-AppDispatcher.register(function (payload) {
-  _AppActions2.default.call(payload);
-  return true;
-});
-
-exports.default = AppDispatcher;
-
-/***/ }),
-/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2257,6 +2018,245 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(40);
+var IE8_DOM_DEFINE = __webpack_require__(104);
+var toPrimitive = __webpack_require__(67);
+var dP = Object.defineProperty;
+
+exports.f = __webpack_require__(31) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = uncontrollable;
+
+var _react = _interopRequireDefault(__webpack_require__(0));
+
+var _invariant = _interopRequireDefault(__webpack_require__(50));
+
+var Utils = _interopRequireWildcard(__webpack_require__(223));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function uncontrollable(Component, controlledValues, methods) {
+  if (methods === void 0) {
+    methods = [];
+  }
+
+  var displayName = Component.displayName || Component.name || 'Component';
+  var isCompositeComponent = Utils.isReactComponent(Component);
+  var controlledProps = Object.keys(controlledValues);
+  var PROPS_TO_OMIT = controlledProps.map(Utils.defaultKey);
+  !(isCompositeComponent || !methods.length) ?  true ? (0, _invariant.default)(false, '[uncontrollable] stateless function components cannot pass through methods ' + 'because they have no associated instances. Check component: ' + displayName + ', ' + 'attempting to pass through methods: ' + methods.join(', ')) : invariant(false) : void 0;
+
+  var UncontrolledComponent =
+  /*#__PURE__*/
+  function (_React$Component) {
+    _inheritsLoose(UncontrolledComponent, _React$Component);
+
+    function UncontrolledComponent() {
+      var _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+      _this.handlers = Object.create(null);
+      controlledProps.forEach(function (propName) {
+        var handlerName = controlledValues[propName];
+
+        var handleChange = function handleChange(value) {
+          if (_this.props[handlerName]) {
+            var _this$props;
+
+            _this._notifying = true;
+
+            for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+              args[_key2 - 1] = arguments[_key2];
+            }
+
+            (_this$props = _this.props)[handlerName].apply(_this$props, [value].concat(args));
+
+            _this._notifying = false;
+          }
+
+          _this._values[propName] = value;
+          if (!_this.unmounted) _this.forceUpdate();
+        };
+
+        _this.handlers[handlerName] = handleChange;
+      });
+      if (isCompositeComponent) _this.attachRef = function (ref) {
+        _this.inner = ref;
+      };
+      return _this;
+    }
+
+    var _proto = UncontrolledComponent.prototype;
+
+    _proto.shouldComponentUpdate = function shouldComponentUpdate() {
+      //let the forceUpdate trigger the update
+      return !this._notifying;
+    };
+
+    _proto.componentWillMount = function componentWillMount() {
+      var _this2 = this;
+
+      var props = this.props;
+      this._values = Object.create(null);
+      controlledProps.forEach(function (key) {
+        _this2._values[key] = props[Utils.defaultKey(key)];
+      });
+    };
+
+    _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      var _this3 = this;
+
+      var props = this.props;
+      controlledProps.forEach(function (key) {
+        /**
+         * If a prop switches from controlled to Uncontrolled
+         * reset its value to the defaultValue
+         */
+        if (!Utils.isProp(nextProps, key) && Utils.isProp(props, key)) {
+          _this3._values[key] = nextProps[Utils.defaultKey(key)];
+        }
+      });
+    };
+
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this.unmounted = true;
+    };
+
+    _proto.getControlledInstance = function getControlledInstance() {
+      return this.inner;
+    };
+
+    _proto.render = function render() {
+      var _this4 = this;
+
+      var props = _extends({}, this.props);
+
+      PROPS_TO_OMIT.forEach(function (prop) {
+        delete props[prop];
+      });
+      var newProps = {};
+      controlledProps.forEach(function (propName) {
+        var propValue = _this4.props[propName];
+        newProps[propName] = propValue !== undefined ? propValue : _this4._values[propName];
+      });
+      return _react.default.createElement(Component, _extends({}, props, newProps, this.handlers, {
+        ref: this.attachRef
+      }));
+    };
+
+    return UncontrolledComponent;
+  }(_react.default.Component);
+
+  UncontrolledComponent.displayName = "Uncontrolled(" + displayName + ")";
+  UncontrolledComponent.propTypes = Utils.uncontrolledPropTypes(controlledValues, displayName);
+  methods.forEach(function (method) {
+    UncontrolledComponent.prototype[method] = function $proxiedMethod() {
+      var _inner;
+
+      return (_inner = this.inner)[method].apply(_inner, arguments);
+    };
+  });
+  UncontrolledComponent.ControlledComponent = Component;
+  /**
+   * useful when wrapping a Component and you want to control
+   * everything
+   */
+
+  UncontrolledComponent.deferControlTo = function (newComponent, additions, nextMethods) {
+    if (additions === void 0) {
+      additions = {};
+    }
+
+    return uncontrollable(newComponent, _extends({}, controlledValues, additions), nextMethods);
+  };
+
+  return UncontrolledComponent;
+}
+
+module.exports = exports["default"];
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _AppActions = __webpack_require__(21);
+
+var _AppActions2 = _interopRequireDefault(_AppActions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Dispatcher = __webpack_require__(195).Dispatcher;
+var AppDispatcher = new Dispatcher();
+
+AppDispatcher.register(function (payload) {
+  _AppActions2.default.call(payload);
+  return true;
+});
+
+exports.default = AppDispatcher;
+
+/***/ }),
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2395,7 +2395,7 @@ module.exports = exports['default'];
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(26);
+var dP = __webpack_require__(27);
 var createDesc = __webpack_require__(42);
 module.exports = __webpack_require__(31) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
@@ -2942,7 +2942,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_prop_types_extra_lib_elementType___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_prop_types_extra_lib_elementType__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_prop_types_extra_lib_isRequiredForA11y__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_prop_types_extra_lib_isRequiredForA11y___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_prop_types_extra_lib_isRequiredForA11y__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_uncontrollable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_uncontrollable__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_uncontrollable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_uncontrollable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_warning__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_warning__);
@@ -3674,7 +3674,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(30);
+var _reactBootstrap = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14575,7 +14575,7 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var core = __webpack_require__(17);
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || (global[SHARED] = {});
 
@@ -14656,8 +14656,8 @@ module.exports = Object.create || function create(O, Properties) {
 /* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(26).f;
-var has = __webpack_require__(27);
+var def = __webpack_require__(27).f;
+var has = __webpack_require__(28);
 var TAG = __webpack_require__(20)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -15519,7 +15519,7 @@ exports.default = (0, _createChainableTypeChecker2.default)(elementType);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_uncontrollable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_uncontrollable__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_uncontrollable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_uncontrollable__);
 
 
@@ -19254,7 +19254,7 @@ module.exports = !__webpack_require__(31) && !__webpack_require__(32)(function (
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(41);
-var document = __webpack_require__(25).document;
+var document = __webpack_require__(26).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
 module.exports = function (it) {
@@ -19266,7 +19266,7 @@ module.exports = function (it) {
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(27);
+var has = __webpack_require__(28);
 var toIObject = __webpack_require__(34);
 var arrayIndexOf = __webpack_require__(202)(false);
 var IE_PROTO = __webpack_require__(71)('IE_PROTO');
@@ -19324,7 +19324,7 @@ module.exports = function (it) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_uncontrollable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_uncontrollable__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_uncontrollable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_uncontrollable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_bootstrapUtils__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils_ValidComponentChildren__ = __webpack_require__(13);
@@ -64805,6 +64805,7 @@ _AppActions2.default.register(_constants.RESET_PASSWORD_REQUEST, function (paylo
     _router2.default.relocateTo(response.request.responseURL);
   }).catch(function (error) {
     _AuthStore2.default.setErrors(error.response.data.errors);
+    _AuthStore2.default.setMessage(error.response.data.message);
     _AppActions2.default.finish(payload);
   });
 });
@@ -64999,7 +65000,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dispatcher = __webpack_require__(29);
+var _dispatcher = __webpack_require__(30);
 
 var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
@@ -65011,7 +65012,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactBootstrap = __webpack_require__(30);
+var _reactBootstrap = __webpack_require__(25);
 
 var _constants = __webpack_require__(12);
 
@@ -65525,7 +65526,7 @@ $export($export.S, 'Object', { create: __webpack_require__(75) });
 /* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(26);
+var dP = __webpack_require__(27);
 var anObject = __webpack_require__(40);
 var getKeys = __webpack_require__(33);
 
@@ -65544,7 +65545,7 @@ module.exports = __webpack_require__(31) ? Object.defineProperties : function de
 /* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var document = __webpack_require__(25).document;
+var document = __webpack_require__(26).document;
 module.exports = document && document.documentElement;
 
 
@@ -65569,8 +65570,8 @@ module.exports = __webpack_require__(17).Object.getOwnPropertySymbols;
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global = __webpack_require__(25);
-var has = __webpack_require__(27);
+var global = __webpack_require__(26);
+var has = __webpack_require__(28);
 var DESCRIPTORS = __webpack_require__(31);
 var $export = __webpack_require__(22);
 var redefine = __webpack_require__(110);
@@ -65592,7 +65593,7 @@ var createDesc = __webpack_require__(42);
 var _create = __webpack_require__(75);
 var gOPNExt = __webpack_require__(216);
 var $GOPD = __webpack_require__(217);
-var $DP = __webpack_require__(26);
+var $DP = __webpack_require__(27);
 var $keys = __webpack_require__(33);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -65809,8 +65810,8 @@ setToStringTag(global.JSON, 'JSON', true);
 
 var META = __webpack_require__(48)('meta');
 var isObject = __webpack_require__(41);
-var has = __webpack_require__(27);
-var setDesc = __webpack_require__(26).f;
+var has = __webpack_require__(28);
+var setDesc = __webpack_require__(27).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -65866,11 +65867,11 @@ var meta = module.exports = {
 /* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 var core = __webpack_require__(17);
 var LIBRARY = __webpack_require__(47);
 var wksExt = __webpack_require__(111);
-var defineProperty = __webpack_require__(26).f;
+var defineProperty = __webpack_require__(27).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -65942,7 +65943,7 @@ var pIE = __webpack_require__(43);
 var createDesc = __webpack_require__(42);
 var toIObject = __webpack_require__(34);
 var toPrimitive = __webpack_require__(67);
-var has = __webpack_require__(27);
+var has = __webpack_require__(28);
 var IE8_DOM_DEFINE = __webpack_require__(104);
 var gOPD = Object.getOwnPropertyDescriptor;
 
@@ -68991,7 +68992,7 @@ module.exports = function (Constructor, NAME, next) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(27);
+var has = __webpack_require__(28);
 var toObject = __webpack_require__(49);
 var IE_PROTO = __webpack_require__(71)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -69087,7 +69088,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var $defineProperty = __webpack_require__(26);
+var $defineProperty = __webpack_require__(27);
 var createDesc = __webpack_require__(42);
 
 module.exports = function (object, index, value) {
@@ -72503,7 +72504,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types_extra_lib_elementType__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types_extra_lib_elementType___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types_extra_lib_elementType__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_uncontrollable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_uncontrollable__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_uncontrollable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_uncontrollable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Grid__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__NavbarBrand__ = __webpack_require__(137);
@@ -74537,7 +74538,7 @@ var Last = createButton('Last', "\xBB");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_uncontrollable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_uncontrollable__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_uncontrollable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_uncontrollable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_warning__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_warning__);
@@ -75969,7 +75970,7 @@ Table.defaultProps = defaultProps;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types_extra_lib_isRequiredForA11y__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types_extra_lib_isRequiredForA11y___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types_extra_lib_isRequiredForA11y__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_uncontrollable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_uncontrollable__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_uncontrollable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_uncontrollable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types_extra_lib_elementType__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types_extra_lib_elementType___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types_extra_lib_elementType__);
@@ -76238,7 +76239,7 @@ Thumbnail.propTypes = propTypes;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_invariant__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_uncontrollable__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_uncontrollable__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_uncontrollable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_uncontrollable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_createChainedFunction__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__utils_ValidComponentChildren__ = __webpack_require__(13);
@@ -76580,7 +76581,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dispatcher = __webpack_require__(29);
+var _dispatcher = __webpack_require__(30);
 
 var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
@@ -76594,7 +76595,7 @@ var _router2 = _interopRequireDefault(_router);
 
 var _constants = __webpack_require__(12);
 
-var _reactBootstrap = __webpack_require__(30);
+var _reactBootstrap = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -76693,7 +76694,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dispatcher = __webpack_require__(29);
+var _dispatcher = __webpack_require__(30);
 
 var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
@@ -76715,9 +76716,11 @@ var _router2 = _interopRequireDefault(_router);
 
 var _constants = __webpack_require__(12);
 
-var _reactBootstrap = __webpack_require__(30);
+var _reactBootstrap = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -76737,11 +76740,9 @@ var LoginForm = function (_React$Component) {
     _this.handleInputChanged = _this.handleInputChanged.bind(_this);
 
     _this.state = {
-      values: {
-        email: '',
-        password: '',
-        remember: 0
-      }
+      email: '',
+      password: '',
+      remember: 0
     };
     return _this;
   }
@@ -76766,11 +76767,7 @@ var LoginForm = function (_React$Component) {
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      var values = this.state.values;
-      values[event.target.name] = event.target.value;
-      this.setState({
-        values: values
-      });
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
       if (event.target.name == 'password') {
         if (event.key === 'Enter') {
           this.postLogin();
@@ -76782,7 +76779,7 @@ var LoginForm = function (_React$Component) {
     value: function postLogin() {
       _dispatcher2.default.dispatch({
         action: _constants.LOG_IN,
-        values: this.state.values,
+        values: this.state,
         emitOn: [{
           store: _AuthStore2.default,
           componentIds: [_constants.LOG_IN_FORM]
@@ -76792,32 +76789,30 @@ var LoginForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var errors = this.state.errors;
       var emailError = errors ? errors.email : null;
       var passwordError = errors ? errors.password : null;
       return _react2.default.createElement(
         _reactBootstrap.Form,
         { horizontal: true },
-        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com', label: 'Email',
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
+          placeholder: 'Example@gmail.com',
+          label: 'Email',
           initialValue: this.state.values.email,
           validationCallback: function validationCallback() {
             return emailError ? 'error' : null;
           },
           help: emailError ? emailError : '',
-          callback: function callback(event) {
-            return _this2.handleInputChanged(event);
-          }, autoComplete: 'on' }),
-        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password', label: 'Password',
+          callback: this.handleInputChanged,
+          autoComplete: 'on' }),
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password',
+          label: 'Password',
           initialValue: this.state.values.password,
           validationCallback: function validationCallback() {
             return passwordError ? 'error' : null;
           },
           help: passwordError ? passwordError : '',
-          callback: function callback(event) {
-            return _this2.handleInputChanged(event);
-          } }),
+          callback: this.handleInputChanged }),
         _react2.default.createElement(
           _reactBootstrap.FormGroup,
           null,
@@ -76871,7 +76866,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dispatcher = __webpack_require__(29);
+var _dispatcher = __webpack_require__(30);
 
 var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
@@ -76893,9 +76888,11 @@ var _router2 = _interopRequireDefault(_router);
 
 var _constants = __webpack_require__(12);
 
-var _reactBootstrap = __webpack_require__(30);
+var _reactBootstrap = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -76915,12 +76912,10 @@ var RegisterForm = function (_React$Component) {
     _this.handleInputChanged = _this.handleInputChanged.bind(_this);
 
     _this.state = {
-      values: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
-      }
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
     };
     return _this;
   }
@@ -76945,18 +76940,14 @@ var RegisterForm = function (_React$Component) {
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      var values = this.state.values;
-      values[event.target.name] = event.target.value;
-      this.setState({
-        values: values
-      });
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
     }
   }, {
     key: 'postRegister',
     value: function postRegister() {
       _dispatcher2.default.dispatch({
         action: _constants.REGISTER,
-        values: this.state.values,
+        values: this.state,
         emitOn: [{
           store: _AuthStore2.default,
           componentIds: [_constants.REGISTER_FORM]
@@ -76966,42 +76957,41 @@ var RegisterForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var errors = this.state.errors;
       var emailError = errors ? errors.email : null;
       var passwordError = errors ? errors.password : null;
       return _react2.default.createElement(
         _reactBootstrap.Form,
         { horizontal: true },
-        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'name', type: 'text', placeholder: 'John Doe', label: 'Name',
-          initialValue: this.state.values.name, autoComplete: 'on',
-          callback: function callback(event) {
-            return _this2.handleInputChanged(event);
-          } }),
-        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com', label: 'Email',
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'name', type: 'text',
+          placeholder: 'John Doe',
+          label: 'Name',
+          initialValue: this.state.values.name,
+          autoComplete: 'on',
+          callback: this.handleInputChanged }),
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
+          placeholder: 'Example@gmail.com',
+          label: 'Email',
           initialValue: this.state.values.email,
           validationCallback: function validationCallback() {
             return emailError ? 'error' : null;
           },
           help: emailError ? emailError : '',
-          callback: function callback(event) {
-            return _this2.handleInputChanged(event);
-          }, autoComplete: 'on' }),
-        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password', label: 'Password',
+          callback: this.handleInputChanged,
+          autoComplete: 'on' }),
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password',
+          label: 'Password',
           initialValue: this.state.values.password,
           validationCallback: function validationCallback() {
             return passwordError ? 'error' : null;
           },
           help: passwordError ? passwordError : '',
-          callback: function callback(event) {
-            return _this2.handleInputChanged(event);
-          } }),
-        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password_confirmation', type: 'password', label: 'Confirm Password',
+          callback: this.handleInputChanged }),
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password_confirmation',
+          type: 'password',
+          label: 'Confirm Password',
           initialValue: this.state.values.password_confirmation,
-          callback: function callback(event) {
-            return _this2.handleInputChanged(event);
-          } }),
+          callback: this.handleInputChanged }),
         _react2.default.createElement(
           _reactBootstrap.FormGroup,
           null,
@@ -77037,7 +77027,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dispatcher = __webpack_require__(29);
+var _dispatcher = __webpack_require__(30);
 
 var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
@@ -77059,9 +77049,11 @@ var _router2 = _interopRequireDefault(_router);
 
 var _constants = __webpack_require__(12);
 
-var _reactBootstrap = __webpack_require__(30);
+var _reactBootstrap = __webpack_require__(25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -77081,11 +77073,9 @@ var RequestResetLink = function (_React$Component) {
     _this.handleInputChanged = _this.handleInputChanged.bind(_this);
 
     _this.state = {
-      values: {
-        email: '',
-        password: '',
-        remember: 0
-      }
+      email: '',
+      password: '',
+      remember: 0
     };
     return _this;
   }
@@ -77093,35 +77083,28 @@ var RequestResetLink = function (_React$Component) {
   _createClass(RequestResetLink, [{
     key: '_onChange',
     value: function _onChange() {
-      var newValues = this.state.values;
-      newValues['email'] = '';
-
       this.setState({
         errors: _AuthStore2.default.getErrors(),
         status: _AuthStore2.default.getStatus(),
         message: _AuthStore2.default.getMessage(),
-        values: newValues
+        email: ''
       });
       _AuthStore2.default.reset();
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _AuthStore2.default.on(_constants.SEND_PASSWORD_RESET_FORM, this._onChange.bind(this));
+      _AuthStore2.default.on('send-reset-form', this._onChange.bind(this));
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      _AuthStore2.default.removeListener(_constants.SEND_PASSWORD_RESET_FORM, this._onChange.bind(this));
+      _AuthStore2.default.removeListener('send-reset-form', this._onChange.bind(this));
     }
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      var values = this.state.values;
-      values[event.target.name] = event.target.value;
-      this.setState({
-        values: values
-      });
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
       if (event.target.name == 'email') {
         if (event.key == 'Enter') {
           this.sendResetLink();
@@ -77133,45 +77116,49 @@ var RequestResetLink = function (_React$Component) {
     value: function sendResetLink() {
       _dispatcher2.default.dispatch({
         action: _constants.SEND_PASSWORD_RESET,
-        values: this.state.values,
+        values: this.state,
         emitOn: [{
           store: _AuthStore2.default,
-          componentIds: [_constants.SEND_PASSWORD_RESET_FORM]
+          componentIds: ['send-reset-form']
         }]
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
 
       var errors = this.state.errors;
       var emailError = errors ? errors.email : null;
       var status = this.state.status;
       var message = this.state.message;
       var validation = emailError ? 'error' : status ? status == 200 ? 'success' : 'error' : null;
+
       return _react2.default.createElement(
         _reactBootstrap.Form,
         { horizontal: true },
         _react2.default.createElement(
-          _reactBootstrap.Col,
-          { smOffset: 3, sm: 6 },
-          status ? _react2.default.createElement(
-            _reactBootstrap.Alert,
-            { bsStyle: status == 200 ? 'success' : 'danger' },
-            message
-          ) : null
+          _reactBootstrap.FormGroup,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { smOffset: 4, sm: 4 },
+            status ? _react2.default.createElement(
+              _reactBootstrap.Alert,
+              { bsStyle: status == 200 ? 'success' : 'danger' },
+              message
+            ) : null
+          )
         ),
-        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email', placeholder: 'Example@gmail.com',
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
+          placeholder: 'Example@gmail.com',
           label: 'Enter Your Email Address',
           initialValue: this.state.values.email,
           validationCallback: function validationCallback() {
             return validation;
           },
           help: emailError ? emailError : '',
-          callback: function callback(event) {
-            return _this2.handleInputChanged(event);
-          }, autoComplete: 'on' }),
+          callback: this.handleInputChanged,
+          autoComplete: 'on' }),
         _react2.default.createElement(
           _reactBootstrap.FormGroup,
           null,
@@ -77207,7 +77194,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dispatcher = __webpack_require__(29);
+var _dispatcher = __webpack_require__(30);
 
 var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
@@ -77229,7 +77216,11 @@ var _router2 = _interopRequireDefault(_router);
 
 var _constants = __webpack_require__(12);
 
+var _reactBootstrap = __webpack_require__(25);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -77247,22 +77238,17 @@ var ResetPasswordForm = function (_React$Component) {
 
     _this.sendResetPassword = _this.sendResetPassword.bind(_this);
     _this.handleInputChanged = _this.handleInputChanged.bind(_this);
-
-    _this.state = {};
     return _this;
   }
 
   _createClass(ResetPasswordForm, [{
     key: '_onChange',
     value: function _onChange() {
-      var newValues = this.state.values;
-      newValues['email'] = '';
-
       this.setState({
         errors: _AuthStore2.default.getErrors(),
         status: _AuthStore2.default.getStatus(),
         message: _AuthStore2.default.getMessage(),
-        values: newValues
+        email: ''
       });
       _AuthStore2.default.reset();
     }
@@ -77279,18 +77265,14 @@ var ResetPasswordForm = function (_React$Component) {
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      var values = this.state.values;
-      values[event.target.name] = event.target.value;
-      this.setState({
-        values: values
-      });
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
     }
   }, {
     key: 'sendResetPassword',
     value: function sendResetPassword() {
       _dispatcher2.default.dispatch({
         action: _constants.RESET_PASSWORD_REQUEST,
-        values: this.state.values,
+        values: this.state,
         emitOn: [{
           store: _AuthStore2.default,
           componentIds: [_constants.RESET_PASSWORD_FORM]
@@ -77300,7 +77282,64 @@ var ResetPasswordForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return null;
+      var errors = this.state.errors;
+      var emailError = errors ? errors.email : null;
+      var passwordError = errors ? errors.password : null;
+      var status = this.state.status;
+      var message = this.state.message;
+
+      return _react2.default.createElement(
+        _reactBootstrap.Form,
+        null,
+        _react2.default.createElement(
+          _reactBootstrap.FormGroup,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { smOffset: 4, sm: 4 },
+            status ? _react2.default.createElement(
+              Alert,
+              { bsStyle: status == 200 ? 'success' : 'danger' },
+              message
+            ) : null
+          )
+        ),
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
+          placeholder: 'Example@gmail.com',
+          label: 'Email',
+          initialValue: this.state.values.email,
+          validationCallback: function validationCallback() {
+            return emailError ? 'error' : null;
+          },
+          help: emailError ? emailError : '',
+          callback: this.handleInputChanged,
+          autoComplete: 'on' }),
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password',
+          label: 'Password',
+          initialValue: this.state.values.password,
+          validationCallback: function validationCallback() {
+            return passwordError ? 'error' : null;
+          },
+          help: passwordError ? passwordError : '',
+          callback: this.handleInputChanged }),
+        _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password_confirmation', type: 'password',
+          label: 'Confirm Password',
+          initialValue: this.state.values.password_confirmation,
+          callback: this.handleInputChanged }),
+        _react2.default.createElement(
+          _reactBootstrap.FormGroup,
+          null,
+          _react2.default.createElement(
+            _reactBootstrap.Col,
+            { smOffset: 4, sm: 10 },
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { onClick: this.postRegister },
+              'Reset Password'
+            )
+          )
+        )
+      );
     }
   }]);
 
