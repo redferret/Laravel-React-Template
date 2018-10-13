@@ -76767,12 +76767,18 @@ var LoginForm = function (_React$Component) {
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      this.setState(_defineProperty({}, event.target.name, event.target.value));
-      if (event.target.name == 'password') {
-        if (event.key === 'Enter') {
-          this.postLogin();
+      var _this2 = this;
+
+      var key = event.target.name;
+      var value = event.target.value;
+      var eventKey = event.key;
+      this.setState(_defineProperty({}, key, value), function () {
+        if (key == 'password') {
+          if (eventKey === 'Enter') {
+            _this2.postLogin();
+          }
         }
-      }
+      });
     }
   }, {
     key: 'postLogin',
@@ -76798,7 +76804,7 @@ var LoginForm = function (_React$Component) {
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
           placeholder: 'Example@gmail.com',
           label: 'Email',
-          initialValue: this.state.values.email,
+          initialValue: this.state.email,
           validationCallback: function validationCallback() {
             return emailError ? 'error' : null;
           },
@@ -76807,7 +76813,7 @@ var LoginForm = function (_React$Component) {
           autoComplete: 'on' }),
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password',
           label: 'Password',
-          initialValue: this.state.values.password,
+          initialValue: this.state.password,
           validationCallback: function validationCallback() {
             return passwordError ? 'error' : null;
           },
@@ -76940,7 +76946,18 @@ var RegisterForm = function (_React$Component) {
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      this.setState(_defineProperty({}, event.target.name, event.target.value));
+      var _this2 = this;
+
+      var key = event.target.name;
+      var value = event.target.value;
+      var eventKey = event.key;
+      this.setState(_defineProperty({}, key, value), function () {
+        if (key == 'password_confirmation') {
+          if (eventKey === 'Enter') {
+            _this2.postRegister();
+          }
+        }
+      });
     }
   }, {
     key: 'postRegister',
@@ -76966,13 +76983,13 @@ var RegisterForm = function (_React$Component) {
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'name', type: 'text',
           placeholder: 'John Doe',
           label: 'Name',
-          initialValue: this.state.values.name,
+          initialValue: this.state.name,
           autoComplete: 'on',
           callback: this.handleInputChanged }),
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
           placeholder: 'Example@gmail.com',
           label: 'Email',
-          initialValue: this.state.values.email,
+          initialValue: this.state.email,
           validationCallback: function validationCallback() {
             return emailError ? 'error' : null;
           },
@@ -76981,7 +76998,7 @@ var RegisterForm = function (_React$Component) {
           autoComplete: 'on' }),
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password',
           label: 'Password',
-          initialValue: this.state.values.password,
+          initialValue: this.state.password,
           validationCallback: function validationCallback() {
             return passwordError ? 'error' : null;
           },
@@ -76990,7 +77007,7 @@ var RegisterForm = function (_React$Component) {
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password_confirmation',
           type: 'password',
           label: 'Confirm Password',
-          initialValue: this.state.values.password_confirmation,
+          initialValue: this.state.password_confirmation,
           callback: this.handleInputChanged }),
         _react2.default.createElement(
           _reactBootstrap.FormGroup,
@@ -77073,9 +77090,7 @@ var RequestResetLink = function (_React$Component) {
     _this.handleInputChanged = _this.handleInputChanged.bind(_this);
 
     _this.state = {
-      email: '',
-      password: '',
-      remember: 0
+      email: ''
     };
     return _this;
   }
@@ -77104,12 +77119,18 @@ var RequestResetLink = function (_React$Component) {
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      this.setState(_defineProperty({}, event.target.name, event.target.value));
-      if (event.target.name == 'email') {
-        if (event.key == 'Enter') {
-          this.sendResetLink();
+      var _this2 = this;
+
+      var key = event.target.name;
+      var value = event.target.value;
+      var eventKey = event.key;
+      this.setState(_defineProperty({}, key, value), function () {
+        if (key == 'email') {
+          if (eventKey === 'Enter') {
+            _this2.sendResetLink();
+          }
         }
-      }
+      });
     }
   }, {
     key: 'sendResetLink',
@@ -77141,7 +77162,7 @@ var RequestResetLink = function (_React$Component) {
           null,
           _react2.default.createElement(
             _reactBootstrap.Col,
-            { smOffset: 4, sm: 4 },
+            { smOffset: 3, sm: 6 },
             status ? _react2.default.createElement(
               _reactBootstrap.Alert,
               { bsStyle: status == 200 ? 'success' : 'danger' },
@@ -77152,7 +77173,7 @@ var RequestResetLink = function (_React$Component) {
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
           placeholder: 'Example@gmail.com',
           label: 'Enter Your Email Address',
-          initialValue: this.state.values.email,
+          initialValue: this.state.email,
           validationCallback: function validationCallback() {
             return validation;
           },
@@ -77238,6 +77259,12 @@ var ResetPasswordForm = function (_React$Component) {
 
     _this.sendResetPassword = _this.sendResetPassword.bind(_this);
     _this.handleInputChanged = _this.handleInputChanged.bind(_this);
+
+    _this.state = {
+      email: '',
+      password: '',
+      password_confirmation: ''
+    };
     return _this;
   }
 
@@ -77265,7 +77292,18 @@ var ResetPasswordForm = function (_React$Component) {
   }, {
     key: 'handleInputChanged',
     value: function handleInputChanged(event) {
-      this.setState(_defineProperty({}, event.target.name, event.target.value));
+      var _this2 = this;
+
+      var key = event.target.name;
+      var value = event.target.value;
+      var eventKey = event.key;
+      this.setState(_defineProperty({}, key, value), function () {
+        if (key == 'password_confirmation') {
+          if (eventKey === 'Enter') {
+            _this2.sendResetPassword();
+          }
+        }
+      });
     }
   }, {
     key: 'sendResetPassword',
@@ -77296,7 +77334,7 @@ var ResetPasswordForm = function (_React$Component) {
           null,
           _react2.default.createElement(
             _reactBootstrap.Col,
-            { smOffset: 4, sm: 4 },
+            { smOffset: 3, sm: 6 },
             status ? _react2.default.createElement(
               Alert,
               { bsStyle: status == 200 ? 'success' : 'danger' },
@@ -77307,7 +77345,7 @@ var ResetPasswordForm = function (_React$Component) {
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'email', type: 'email',
           placeholder: 'Example@gmail.com',
           label: 'Email',
-          initialValue: this.state.values.email,
+          initialValue: this.state.email,
           validationCallback: function validationCallback() {
             return emailError ? 'error' : null;
           },
@@ -77316,7 +77354,7 @@ var ResetPasswordForm = function (_React$Component) {
           autoComplete: 'on' }),
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password', type: 'password',
           label: 'Password',
-          initialValue: this.state.values.password,
+          initialValue: this.state.password,
           validationCallback: function validationCallback() {
             return passwordError ? 'error' : null;
           },
@@ -77324,7 +77362,7 @@ var ResetPasswordForm = function (_React$Component) {
           callback: this.handleInputChanged }),
         _react2.default.createElement(_Input2.default, { smOffset: 4, sm: 4, name: 'password_confirmation', type: 'password',
           label: 'Confirm Password',
-          initialValue: this.state.values.password_confirmation,
+          initialValue: this.state.password_confirmation,
           callback: this.handleInputChanged }),
         _react2.default.createElement(
           _reactBootstrap.FormGroup,

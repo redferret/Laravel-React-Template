@@ -26,9 +26,7 @@ export default class RequestResetLink extends React.Component {
     this.handleInputChanged = this.handleInputChanged.bind(this);
 
     this.state = {
-      email: '',
-      password: '',
-      remember: 0
+      email: ''
     }
   }
 
@@ -51,14 +49,18 @@ export default class RequestResetLink extends React.Component {
   }
 
   handleInputChanged(event) {
+    let key = event.target.name;
+    let value = event.target.value;
+    let eventKey = event.key;
     this.setState({
-      [event.target.name]: event.target.value
-    });
-    if (event.target.name == 'email') {
-      if (event.key == 'Enter') {
-        this.sendResetLink();
+      [key]: value
+    }, () => {
+      if (key == 'email') {
+        if (eventKey === 'Enter') {
+          this.sendResetLink();
+        }
       }
-    }
+    });
   }
 
   sendResetLink() {
@@ -83,7 +85,7 @@ export default class RequestResetLink extends React.Component {
     return (
       <Form horizontal>
         <FormGroup>
-          <Col smOffset={4} sm={4}>
+          <Col smOffset={3} sm={6}>
             {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
           </Col>
         </FormGroup>

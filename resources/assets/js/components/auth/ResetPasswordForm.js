@@ -23,6 +23,12 @@ export default class ResetPasswordForm extends React.Component {
     super(props, context);
     this.sendResetPassword = this.sendResetPassword.bind(this);
     this.handleInputChanged = this.handleInputChanged.bind(this);
+
+    this.state = {
+      email: '',
+      password: '',
+      password_confirmation: ''
+    }
   }
 
   _onChange() {
@@ -44,8 +50,17 @@ export default class ResetPasswordForm extends React.Component {
   }
 
   handleInputChanged(event) {
+    let key = event.target.name;
+    let value = event.target.value;
+    let eventKey = event.key;
     this.setState({
-      [event.target.name]: event.target.value
+      [key]: value
+    }, () => {
+      if (key == 'password_confirmation') {
+        if (eventKey === 'Enter') {
+          this.sendResetPassword();
+        }
+      }
     });
   }
 
@@ -70,7 +85,7 @@ export default class ResetPasswordForm extends React.Component {
     return (
       <Form>
         <FormGroup>
-          <Col smOffset={4} sm={4}>
+          <Col smOffset={3} sm={6}>
             {status? <Alert bsStyle={status == 200 ? 'success':'danger'}>{message}</Alert> : null}
           </Col>
         </FormGroup>

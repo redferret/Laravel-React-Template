@@ -47,9 +47,18 @@ export default class RegisterForm extends React.Component {
   }
 
   handleInputChanged(event) {
+    let key = event.target.name;
+    let value = event.target.value;
+    let eventKey = event.key;
     this.setState({
-      [event.target.name]: event.target.value
-    })
+      [key]: value
+    }, () => {
+      if (key == 'password_confirmation') {
+        if (eventKey === 'Enter') {
+          this.postRegister();
+        }
+      }
+    });
   }
 
   postRegister() {

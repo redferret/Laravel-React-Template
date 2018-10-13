@@ -48,14 +48,18 @@ export default class LoginForm extends React.Component {
   }
 
   handleInputChanged(event) {
+    let key = event.target.name;
+    let value = event.target.value;
+    let eventKey = event.key;
     this.setState({
-      [event.target.name]: event.target.value
-    });
-    if (event.target.name == 'password') {
-      if (event.key === 'Enter') {
-        this.postLogin();
+      [key]: value
+    }, () => {
+      if (key == 'password') {
+        if (eventKey === 'Enter') {
+          this.postLogin();
+        }
       }
-    }
+    });
   }
 
   postLogin() {
