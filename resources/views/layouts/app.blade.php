@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @if($token)
+    @if(isset($token))
       <meta name="email_token" content="{{ $token }}">
     @endif
 
