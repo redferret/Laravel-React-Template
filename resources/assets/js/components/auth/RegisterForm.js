@@ -72,14 +72,14 @@ export default class RegisterForm extends React.Component {
         <Input smOffset={4} sm={4} name='name' type='text'
           placeholder='John Doe'
           label='Name'
-          initialValue={this.state.values.name}
+          initialValue={this.state.name}
           autoComplete='on'
           callback={this.handleInputChanged}/>
 
         <Input smOffset={4} sm={4} name='email' type='email'
           placeholder='Example@gmail.com'
           label='Email'
-          initialValue={this.state.values.email}
+          initialValue={this.state.email}
           validationCallback={() => emailError? 'error' : null}
           help={emailError? emailError : ''}
           callback={this.handleInputChanged}
@@ -87,7 +87,7 @@ export default class RegisterForm extends React.Component {
 
         <Input smOffset={4} sm={4} name='password' type='password'
           label='Password'
-          initialValue={this.state.values.password}
+          initialValue={this.state.password}
           validationCallback={() => passwordError? 'error' : null}
           help={passwordError? passwordError : ''}
           callback={this.handleInputChanged}/>
@@ -95,7 +95,7 @@ export default class RegisterForm extends React.Component {
         <Input smOffset={4} sm={4} name='password_confirmation'
           type='password'
           label='Confirm Password'
-          initialValue={this.state.values.password_confirmation}
+          initialValue={this.state.password_confirmation}
           callback={this.handleInputChanged}/>
 
         <FormGroup>
