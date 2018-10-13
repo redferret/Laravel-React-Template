@@ -112,7 +112,7 @@ export default class ResetPasswordForm extends React.Component {
 
         <FormGroup>
           <Col smOffset={4} sm={10}>
-            <Button onClick={this.postRegister}>Reset Password</Button>
+            <Button onClick={this.sendResetPassword}>Reset Password</Button>
           </Col>
         </FormGroup>
       </Form>

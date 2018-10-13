@@ -77372,7 +77372,7 @@ var ResetPasswordForm = function (_React$Component) {
             { smOffset: 4, sm: 10 },
             _react2.default.createElement(
               _reactBootstrap.Button,
-              { onClick: this.postRegister },
+              { onClick: this.sendResetPassword },
               'Reset Password'
             )
           )
