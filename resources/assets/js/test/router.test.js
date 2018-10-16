@@ -52,6 +52,26 @@ describe('Route is set and returns the expected URL', () => {
     expect(theRequest).toEqual(theExpectedRequest);
   });
 
+  it('tests custom headers', () => {
+    let customHeaders = {
+      'Accept': 'application/json',
+      'Content-Type': 'multipart/form-data',
+      'X-CSRF-TOKEN': 'Not Defined'
+    }
+    let theExpectedRequest = {
+      method: 'post',
+      url: testRoute,
+      headers: customHeaders
+    };
+
+    let theRequest = Router.request('post', routeName, {
+      args: {
+        id: testId
+      }
+    }, customHeaders);
+    expect(theRequest).toEqual(theExpectedRequest);
+  });
+
 });
 
 test('checkStatus throws Error on status not in the range [200, 300)', () => {

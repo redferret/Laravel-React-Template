@@ -51,14 +51,14 @@ class Router {
     window.location.href = url;
   }
 
-  request(type, routeName, requestData) {
+  request(type, routeName, requestData, headers) {
     if (typeof requestData == 'undefined' || requestData == null) {
       requestData = {};
     }
     return {
       method: type,
       url: this.partialRoute(routeName, requestData.args),
-      headers: HEADERS,
+      headers: headers? headers : HEADERS,
       data: requestData.data
     }
   }
