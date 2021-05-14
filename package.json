@@ -11,7 +11,7 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "devDependencies": {
-    "axios": "^0.18",
+    "axios": "^0.21",
     "babel-jest": "^23.6.0",
     "babel-preset-react": "^6.23.0",
     "bootstrap": "^4.0.0",
