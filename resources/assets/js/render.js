@@ -1,4 +1,4 @@
-
+/* Register your elements here */
 import App from './components/App.js';
 import AppNavbar from './components/AppNavbar.js';
 import LoginForm from './components/auth/LoginForm.js';
