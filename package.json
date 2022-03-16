@@ -20,7 +20,7 @@
     "jest": "^23.6.0",
     "jquery": "^3.2",
     "laravel-mix": "^2.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.21",
     "popper.js": "^1.12",
     "react": "^16.4.2",
     "react-addons-test-utils": "^15.6.2",
